@@ -68,9 +68,8 @@ class Pythagoras(MovingCameraSlide):
         self.play(Write(oznB2))
 
         self.next_slide() #######################################
-        # zkoseni ctverce a^2
+        # rovnobezky, priprava pro koseni 
 
-        # priprava pro rovnobezky
         nahore = UP * self.camera.frame_height
         dole = DOWN * self.camera.frame_height
         nalevo = LEFT * self.camera.frame_width
@@ -86,20 +85,21 @@ class Pythagoras(MovingCameraSlide):
         sipkaVodorovne = DoubleArrow((b+0.5)*RIGHT, (b+0.5)*RIGHT + b*DOWN,buff=0, color=GRAY)
         oznB_sipka = oznB.copy().move_to(sipkaVodorovne).shift(0.2 * RIGHT)
 
-
         self.play(Write(svisla1), Write(svisla2))
         self.play(Write(sipkaSvisle), Write(oznA_sipka))
+        self.play(Write(vodorovna1),Write(vodorovna2))
+        self.play(Write(sipkaVodorovne), Write(oznB_sipka))
+
+        self.play(Indicate(uhel1))      # upozorneni na pravy uhel
+        self.play(Write(uhel2))
+        
+        self.next_slide() ##########################################
+        # zkoseni ctverce a^2 a b^2
+
         rovnobeznikA = Polygon([-a,-b,0],[0,0,0], [0,a,0], [-a,-b+a,0]).set_fill(ctverecA.color, opacity=0.5).set_stroke(modra)
         self.play(oznA.animate.shift(a*LEFT))
         self.play(ReplacementTransform(ctverecA, rovnobeznikA), oznA2.animate.move_to(rovnobeznikA), oznA.animate.shift(b*DOWN))
 
-        self.next_slide() ##########################################
-        # zkoseni ctverce b^2
-
-        self.play(Write(vodorovna1),Write(vodorovna2))
-        self.play(Write(sipkaVodorovne), Write(oznB_sipka))
-        self.play(Indicate(uhel1))      # upozorneni na pravy uhel
-        self.play(Write(uhel2))
         rovnobeznikB = Polygon([-a,-b,0], [-a+b,-b,0], [b,0,0], [0,0,0]).set_fill(ctverecB.color, opacity=0.5).set_stroke(cervena)     
         self.play(oznB.animate.shift(b*DOWN))
         self.play(ReplacementTransform(ctverecB, rovnobeznikB), oznB2.animate.move_to(rovnobeznikB), oznB.animate.shift(a*LEFT))
@@ -125,21 +125,23 @@ class Pythagoras(MovingCameraSlide):
         oznC_2 = oznC.copy().move_to(stranaC).shift(0.4 * UP).set_color(GREEN)
         self.play(Write(oznC_2))
         oznC_3 = oznC_2.copy()
-        oznC_4 = oznC_2.copy().shift((b + 0.6)* RIGHT + (0.4 * DOWN)).set_color(WHITE)
+        oznC_4 = oznC_2.copy()
         self.play(oznC_3.animate.shift(a * UP).set_color(WHITE))
-        self.play(TransformMatchingShapes(oznC_2, oznC_4))
-        self.play(Unwrite(shodny1), Unwrite(oznA_sipka), Unwrite(oznB_sipka), Unwrite(uhel3))
+        self.play(oznC_4.animate.shift((b + 0.6)* RIGHT + (0.4 * DOWN)).set_color(WHITE))
 
+        self.next_slide() ###########################################
+        # posun rovnobezniku do jednoho ctverce
+
+        self.play(Unwrite(shodny1), Unwrite(oznA_sipka), Unwrite(oznB_sipka), Unwrite(uhel3), Unwrite(oznC_2))
         self.play(FadeOut(svisla1), FadeOut(svisla2))
         self.play(FadeOut(vodorovna1), FadeOut(vodorovna2))
 
-        self.next_slide() ###########################################
-        # 
-
         # druhy shodny trojuhelnik
         shodny2 = trojuhelnik.copy().shift([-a,-b,0]).remove_updater(vzdyNavrch)
-        self.play(Write(shodny2))
-        self.play(Unwrite(shodny2), Unwrite(oznA), Unwrite(oznB))
+        uhel4 = RightAngle(Line([-a,-b,0], [-a,-b+a,0]), Line([-a,-b,0], [-a+b,-b,0])).set_color(GREEN)
+        self.play(Write(shodny2), Write(uhel4))
+        self.play(Unwrite(shodny2), Unwrite(oznA), Unwrite(oznB), Unwrite(uhel4))
+        self.play(FadeIn(oznA2, oznB2))
 
         smer = [a / c * vyska, b / c * vyska, 0]
         obdelnikA = Polygon(rovnobeznikA.get_vertices()[0] + smer, rovnobeznikA.get_vertices()[1] + smer, rovnobeznikA.get_vertices()[2], rovnobeznikA.get_vertices()[3]).set_fill(rovnobeznikA.color, opacity=0.5)
@@ -147,7 +149,8 @@ class Pythagoras(MovingCameraSlide):
         obdelnikB = Polygon(rovnobeznikB.get_vertices()[0] + smer, rovnobeznikB.get_vertices()[1], rovnobeznikB.get_vertices()[2], rovnobeznikB.get_vertices()[3] + smer).set_fill(rovnobeznikB.color, opacity=0.5)
         self.play(ReplacementTransform(rovnobeznikB, obdelnikB), oznB2.animate.move_to(obdelnikB))
 
-        self.next_slide()
+        self.next_slide() ############################################
+        # vizualizace ctverce c
 
         ctverecC = Polygon(obdelnikB.get_vertices()[1], obdelnikB.get_vertices()[2] ,obdelnikA.get_vertices()[2],obdelnikA.get_vertices()[3],).set_fill(GREEN, opacity=0.5)
         oznC2 = MathTex("c^2").move_to(ctverecC)
