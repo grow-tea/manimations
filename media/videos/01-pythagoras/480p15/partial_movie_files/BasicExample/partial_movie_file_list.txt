@@ -1,0 +1,4 @@
+# This file is used internally by FFMPEG.
+file 'file:/home/david-hubac/Manim/manimations/media/videos/01-pythagoras/480p15/partial_movie_files/BasicExample/1185818338_2958499242_223132457.mp4'
+file 'file:/home/david-hubac/Manim/manimations/media/videos/01-pythagoras/480p15/partial_movie_files/BasicExample/624642324_337067646_2446856078.mp4'
+file 'file:/home/david-hubac/Manim/manimations/media/videos/01-pythagoras/480p15/partial_movie_files/BasicExample/624642324_1346488509_1311452279.mp4'

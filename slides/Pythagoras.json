@@ -1,0 +1,105 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/69fade4b229f11b3a97b42e5e4f6aa3790c30150594e1160e5cf367b1e72669a.mp4",
+      "rev_file": "slides/files/Pythagoras/69fade4b229f11b3a97b42e5e4f6aa3790c30150594e1160e5cf367b1e72669a_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/caf5a7a51aca6e35a46e93031e7b3dbf68ae42597b7453afb79859a52c9b2457.mp4",
+      "rev_file": "slides/files/Pythagoras/caf5a7a51aca6e35a46e93031e7b3dbf68ae42597b7453afb79859a52c9b2457_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/854415769ac1680244758e9315e5e9f1319537d2bfe847a78c456ac0fec81cb2.mp4",
+      "rev_file": "slides/files/Pythagoras/854415769ac1680244758e9315e5e9f1319537d2bfe847a78c456ac0fec81cb2_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/cca7bcce2cccbdcc0771f8fc6c7126a21d734747fe11661f0897a4fa0873ccca.mp4",
+      "rev_file": "slides/files/Pythagoras/cca7bcce2cccbdcc0771f8fc6c7126a21d734747fe11661f0897a4fa0873ccca_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/d380c03c1322c91a290bc0c812023d7fd4d79820b4e2ef07c2551c21477572e1.mp4",
+      "rev_file": "slides/files/Pythagoras/d380c03c1322c91a290bc0c812023d7fd4d79820b4e2ef07c2551c21477572e1_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/d56e550ecf31e1759deee87b3f5b22bfa2ccfc37fd36adf31ec8fb677f512be7.mp4",
+      "rev_file": "slides/files/Pythagoras/d56e550ecf31e1759deee87b3f5b22bfa2ccfc37fd36adf31ec8fb677f512be7_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/6566d733867855c49bbff588ed7d71a0cab4d84b7014b7eb2d8ef1b869c2cc3e.mp4",
+      "rev_file": "slides/files/Pythagoras/6566d733867855c49bbff588ed7d71a0cab4d84b7014b7eb2d8ef1b869c2cc3e_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/Pythagoras/4c4f158536860cc9e684d724238b3cf4b05cc1cf3288b3e203956a6ecd9676dc.mp4",
+      "rev_file": "slides/files/Pythagoras/4c4f158536860cc9e684d724238b3cf4b05cc1cf3288b3e203956a6ecd9676dc_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    854,
+    480
+  ],
+  "background_color": "black"
+}
