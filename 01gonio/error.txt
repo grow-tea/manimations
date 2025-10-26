@@ -1,0 +1,24 @@
+Manim Community v0.19.0
+
+[10/24/25 17:43:13] INFO     Animation 0 : Using cached data (hash : 1185818338_3201849554_2116672112)                          cairo_renderer.py:89
+                    INFO     Animation 1 : Using cached data (hash : 624642324_3917956021_3935243802)                           cairo_renderer.py:89
+Animation 1: _MethodAnimation(ValueTracker):   0%|          | 0/1 [00:00<?, ?it/s]                                                                                                      INFO     Animation 2 : Using cached data (hash : 624642324_1839128356_2092597006)                           cairo_renderer.py:89
+                    INFO     Combining to Movie file.                                                                       scene_file_writer.py:739
+                    INFO                                                                                                    scene_file_writer.py:886
+                             File ready at                                                                                                          
+                             '/home/david-hubac/Projects/manimations/01gonio/media/videos/01-jednotkovy-kruh/480p15/Jednotk                         
+                             ovy_kruh_1.mp4'                                                                                                        
+                                                                                                                                                    
+                    INFO     Rendered Jednotkovy_kruh_1                                                                                 scene.py:255
+                             Played 3 animations                                                                                                    
+                    INFO     Previewed File at:                                                                                      file_ops.py:237
+                             '/home/david-hubac/Projects/manimations/01gonio/media/videos/01-jednotkovy-kruh/480p15/Jednotkovy_kruh_                
+                             1.mp4'                                                                                                                 
+Concatenating animations to 'slides/files/Jednotkovy_kruh_1' and generating reversed animations:   0%|          | 0/1 [00:00<?, ? slides/s]                                                                                                                                           [10/24/25 17:43:13] INFO     Generated 1 slides to '/home/david-hubac/Projects/manimations/01gonio/slides/files/Jednotkovy_kruh_1'       base.py:599
+                    INFO     Generated 1 slides to '/home/david-hubac/Projects/manimations/01gonio/slides/files/Jednotkovy_kruh_1'       base.py:599
+                    INFO     Slide 'Jednotkovy_kruh_1' configuration written in                                                          base.py:611
+                             '/home/david-hubac/Projects/manimations/01gonio/slides/Jednotkovy_kruh_1.json'                                         
+                    INFO     Slide 'Jednotkovy_kruh_1' configuration written in                                                          base.py:611
+                             '/home/david-hubac/Projects/manimations/01gonio/slides/Jednotkovy_kruh_1.json'                                         
+[000059555d77b7f0] main libvlc: Running vlc with the default interface. Use 'cvlc' to use vlc without interface.
+/usr/bin/vlc: symbol lookup error: /snap/core20/current/lib/x86_64-linux-gnu/libpthread.so.0: undefined symbol: __libc_pthread_init, version GLIBC_PRIVATE
