@@ -3,6 +3,9 @@ from manim_slides import Slide
 import numpy as np
 
 
+RUDA = RED
+STUPNE_BARVA = BLUE
+
 class Sdilene(Slide):
     
     def do_poloprimky(usecka, ratio=100):
@@ -10,10 +13,10 @@ class Sdilene(Slide):
         usecka.put_start_and_end_on(usecka.start, usecka.end + ratio * delta)
         return usecka
 
-    def pozice_na_kruznici(osy, vel_uhlu):
+    def pozice_na_kruznici(self, vel_uhlu):
         x = np.cos(vel_uhlu)
         y = np.sin(vel_uhlu)
-        return osy.c2p(x, y)
+        return self.osy.c2p(x, y)
     
     def bod_na_kruznici(osy, vel_uhlu):
         return Dot(Sdilene.pozice_na_kruznici(osy,vel_uhlu),color=BLUE)
@@ -31,9 +34,12 @@ class Sdilene(Slide):
 
 
     def udelej_popis(osy, uhel, hodnota):
-        #uhel -= 15*DEGREES
-        pozice = osy.c2p(np.cos(uhel) * 1.25, np.sin(uhel) * 1.25)
+        uhel -= 10*DEGREES
+        pozice = osy.c2p(np.cos(uhel) * 1.15, np.sin(uhel) * 1.25)
         return MathTex(hodnota).move_to(pozice)
+
+    def udelej_vysec_vypln(osy, uhel):
+        return Sector(radius=1, angle=uhel).move_to(osy.c2p(0,0))
 
     def __init__(self, **kwarks):
         super().__init__(**kwarks)
@@ -117,6 +123,9 @@ class Sdilene(Slide):
         self.or_uhel_popis.add_updater(lambda m:m.set_value(self.velikost_uhlu.get_value() / DEGREES))
 
 
+    def show(self):
+        self.wait(2)
+
 
 class Sablona_jednotkova_kruznice(Sdilene):
     
@@ -130,6 +139,7 @@ class Sablona_jednotkova_kruznice(Sdilene):
 class Stupne_hadanka(Sdilene):
 
     def construct(self):
+
         self.velikost_uhlu.set_value(90 * DEGREES)
         self.znakB.update()
         self.bodB.update()
@@ -148,13 +158,46 @@ class Stupne_hadanka(Sdilene):
             self.osy
         )
 
-        for s in [180, 45, 270, 135, 315, 225, 359.9]:
+        for s in [180, 45]:
             bod_hadej = Dot(Sdilene.pozice_na_kruznici(self.osy, s * DEGREES),color=BLUE)
             self.add(bod_hadej)
             self.play(Flash(bod_hadej))
             self.next_slide()
-            self.play(self.velikost_uhlu.animate.set_value(s * DEGREES),run_time=4, rate_func=smooth)
+            self.play(self.velikost_uhlu.animate.set_value(s * DEGREES),run_time=3, rate_func=smooth)
             self.play(FadeOut(bod_hadej))
+
+        stare_s = s
+        stary_bod = bod_hadej
+        
+        for s in [225, 135, 315, 270, 359.9]:
+            bod_hadej = Dot(Sdilene.pozice_na_kruznici(self.osy, s * DEGREES),color=BLUE)
+            self.add(bod_hadej)
+            self.play(Flash(bod_hadej))
+            self.next_slide()
+            
+            pomocna_tecna = TangentLine(self.kruznice, alpha=stare_s*DEGREES/2/PI, color=RED)
+            vektor_tecny = pomocna_tecna.get_unit_vector() * np.sign(s - stare_s)
+            koncovy_bod = stary_bod.get_center() + vektor_tecny
+            sipka = Arrow(
+                start=stary_bod.get_center(),
+                end=koncovy_bod,
+                buff=0
+            )
+            self.play(Write(sipka))
+            popisek = Integer(s - stare_s, unit=r"^{\circ}", include_sign=True).move_to(koncovy_bod * 0.5)
+            self.play(Write(popisek))
+            self.next_slide()
+            
+            self.play(Unwrite(popisek), Unwrite(sipka))
+            self.play(self.velikost_uhlu.animate.set_value(s * DEGREES),run_time=3, rate_func=smooth)
+            self.play(FadeOut(bod_hadej))
+
+            # pro dalsi iteraci
+            stary_bod = bod_hadej
+            stare_s = s
+
+
+
 
         self.next_slide()
         nula_stupnu = Integer(0, unit=r"^{\circ}").move_to(self.osy.c2p(0.2,0.2))
@@ -178,11 +221,10 @@ class Stupne_symetrie(Sdilene):
         )
 
         obraz_barva = XKCD.AVOCADO
-
-        b = Sdilene.pozice_na_kruznici(self.osy,33*DEGREES)
-        b1 = Sdilene.pozice_na_kruznici(self.osy,(180-33)*DEGREES)
-        b2 = Sdilene.pozice_na_kruznici(self.osy,(180+33)*DEGREES)
-        b3 = Sdilene.pozice_na_kruznici(self.osy,(360-33)*DEGREES)
+        b = self.pozice_na_kruznici(33*DEGREES)
+        b1 = self.pozice_na_kruznici((180-33)*DEGREES)
+        b2 = self.pozice_na_kruznici((180+33)*DEGREES)
+        b3 = self.pozice_na_kruznici((360-33)*DEGREES)
         vodorovna = DashedLine(b, b1) 
         db1 = Dot(b1, color=BLUE)
         db2 = Dot(b2, color=BLUE)
@@ -382,6 +424,9 @@ class Stupne_or_uhel_ekvivalence(Sdilene):
         self.play(TransformFromCopy(self.or_uhel_popis, Integer(-870, unit="^{\circ}").move_to(self.osy.c2p(1.7, -1.2))))
         self.next_slide()
 
+class Stupne_jako_cast_celku(Sdilene):
+    def construct(self):
+        self.wait()
 
 
 class Delky_na_kruznici(Sdilene):
@@ -389,7 +434,7 @@ class Delky_na_kruznici(Sdilene):
     def construct(self):
         
         polomer = Line(self.osy.c2p(1,0),self.osy.c2p(0,0), color=RED)
-        znakR = MathTex("r").move_to(self.osy.c2p(0.5, -0.1))
+        znakR = MathTex("1").move_to(self.osy.c2p(0.5, -0.1))
 
         self.add(
             self.bodA, self.bodV, self.kruznice, self.znakA
@@ -397,7 +442,7 @@ class Delky_na_kruznici(Sdilene):
         self.play(Create(polomer), Create(znakR))
         self.next_slide()
 
-        znakA_rovnase = MathTex("A = P(0)").move_to(self.znakA, LEFT)
+        znakA_rovnase = MathTex("0").move_to(self.znakA, LEFT)
         self.play(Transform(self.znakA, znakA_rovnase))
 
         body = []
@@ -405,7 +450,7 @@ class Delky_na_kruznici(Sdilene):
         vysece = []
         for i in range(1,7+1):
             body.append(Sdilene.bod_na_kruznici(self.osy,i))
-            texty.append(Sdilene.udelej_popis(self.osy,i,"P(" + str(i) + "r)"))
+            texty.append(Sdilene.udelej_popis(self.osy,i,str(i)))
             vysece.append(Sdilene.udelej_vysec(self.osy,i-1,i))
 
         self.next_slide()
@@ -430,42 +475,45 @@ class Delky_na_kruznici(Sdilene):
         self.play(FadeIn(grupa))
         self.wait(1)
 
-        self.next_slide()
-        self.play(self.velikost_uhlu.animate.set_value(3), run_time=3, rate_func=smooth)
+        #self.next_slide()
+        #self.play(self.velikost_uhlu.animate.set_value(3), run_time=3, rate_func=smooth)
+        #self.wait(1)
+        #self.next_slide()
+        #self.play(FadeIn(self.osy), FadeOut(grupa))
+
+        #bodPi = Sdilene.bod_na_kruznici(self.osy, PI)
+        #textPi = Sdilene.udelej_popis(self.osy, 187 * DEGREES, r"P(\pi r)")
+
+        #bodPi_pul = Sdilene.bod_na_kruznici(self.osy, PI/2)
+        #textPi_pul = Sdilene.udelej_popis(self.osy, 83 * DEGREES, r"P(\tfrac{\pi}{2} r)")
+
+        #bodPi_tripoloviny = Sdilene.bod_na_kruznici(self.osy, 3*PI/2)
+        #textPi_tripoloviny = Sdilene.udelej_popis(self.osy, 263 * DEGREES, r"P(\tfrac{3 \pi}{2} r)")
+
+        #self.velikost_uhlu.set_value(0.1)
+        #self.add(self.bodB.update(), self.vysec.update())
+
+        #self.play(self.velikost_uhlu.animate.set_value(PI), run_time=3, rate_func=smooth)
+        #self.play(Create(bodPi))
+        #self.play(Flash(bodPi), Write(textPi))
+        #self.next_slide()
+        #self.play(self.velikost_uhlu.animate.set_value(2*PI), run_time=3, rate_func=smooth)
+
+        #znakA_rovnase = MathTex("A = P(0) = P(2 \pi r)").move_to(self.znakA, LEFT).shift(0.3 * LEFT)
+        #self.play(Flash(self.bodA))
+        #self.play(Transform(self.znakA, znakA_rovnase))
+
+        #self.next_slide()
+
+        #self.play(Create(bodPi_pul))
+        #self.play(Flash(bodPi_pul), Write(textPi_pul))
+        #self.play(Create(bodPi_tripoloviny))
+        #self.play(Flash(bodPi_tripoloviny), Write(textPi_tripoloviny))
+        #self.wait(1)
+
+class Predstaveni_pi(Sdilene):
+    def construct(self):
         self.wait(1)
-        self.next_slide()
-        self.play(FadeIn(self.osy), FadeOut(grupa))
-
-        bodPi = Sdilene.bod_na_kruznici(self.osy, PI)
-        textPi = Sdilene.udelej_popis(self.osy, 187 * DEGREES, r"P(\pi r)")
-
-        bodPi_pul = Sdilene.bod_na_kruznici(self.osy, PI/2)
-        textPi_pul = Sdilene.udelej_popis(self.osy, 83 * DEGREES, r"P(\tfrac{\pi}{2} r)")
-
-        bodPi_tripoloviny = Sdilene.bod_na_kruznici(self.osy, 3*PI/2)
-        textPi_tripoloviny = Sdilene.udelej_popis(self.osy, 263 * DEGREES, r"P(\tfrac{3 \pi}{2} r)")
-
-        self.velikost_uhlu.set_value(0.1)
-        self.add(self.bodB.update(), self.vysec.update())
-
-        self.play(self.velikost_uhlu.animate.set_value(PI), run_time=3, rate_func=smooth)
-        self.play(Create(bodPi))
-        self.play(Flash(bodPi), Write(textPi))
-        self.next_slide()
-        self.play(self.velikost_uhlu.animate.set_value(2*PI), run_time=3, rate_func=smooth)
-
-        znakA_rovnase = MathTex("A = P(0) = P(2 \pi r)").move_to(self.znakA, LEFT).shift(0.3 * LEFT)
-        self.play(Flash(self.bodA))
-        self.play(Transform(self.znakA, znakA_rovnase))
-
-        self.next_slide()
-
-        self.play(Create(bodPi_pul))
-        self.play(Flash(bodPi_pul), Write(textPi_pul))
-        self.play(Create(bodPi_tripoloviny))
-        self.play(Flash(bodPi_tripoloviny), Write(textPi_tripoloviny))
-        self.wait(1)
-
 
 
 class Radiany_zavedeni(Sdilene):

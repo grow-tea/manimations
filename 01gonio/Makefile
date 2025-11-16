@@ -3,9 +3,9 @@ SCENES := Sablona_jednotkova_kruznice Stupne_hadanka Stupne_symetrie Stupne_or_u
 
 #.PHONY: all $(SCENES) ahoj
 
+all: $(SCENES)
+	@echo ""
+
 $(SCENES):
 	manim -ql $(PYTHON_FILE) $@
 	manim-slides convert $@ slides-publish/$@.html
-
-all: $(SCENES)
-	@echo ""
