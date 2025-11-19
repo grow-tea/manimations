@@ -1,5 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/home/david-hubac/Manim/manimations/media/videos/01-pythagoras/480p15/partial_movie_files/PolygonOnAxes/1185818338_924808318_4017726890.mp4'
-file 'file:/home/david-hubac/Manim/manimations/media/videos/01-pythagoras/480p15/partial_movie_files/PolygonOnAxes/624642324_387310182_1641172441.mp4'
-file 'file:/home/david-hubac/Manim/manimations/media/videos/01-pythagoras/480p15/partial_movie_files/PolygonOnAxes/624642324_862622303_2249779074.mp4'
-file 'file:/home/david-hubac/Manim/manimations/media/videos/01-pythagoras/480p15/partial_movie_files/PolygonOnAxes/624642324_971742138_608343399.mp4'

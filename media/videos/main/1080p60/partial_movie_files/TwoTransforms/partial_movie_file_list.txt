@@ -1,5 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/home/david-hubac/Manim/manimations/media/videos/main/1080p60/partial_movie_files/TwoTransforms/3977891868_2276068630_3481380946.mp4'
-file 'file:/home/david-hubac/Manim/manimations/media/videos/main/1080p60/partial_movie_files/TwoTransforms/2852726489_2349816757_557880437.mp4'
-file 'file:/home/david-hubac/Manim/manimations/media/videos/main/1080p60/partial_movie_files/TwoTransforms/2852726489_3124209289_3490886099.mp4'
-file 'file:/home/david-hubac/Manim/manimations/media/videos/main/1080p60/partial_movie_files/TwoTransforms/2852726489_3201849554_2669900929.mp4'
