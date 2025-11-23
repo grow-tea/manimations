@@ -30,8 +30,12 @@ class Stupne_or_uhel(Slide):
 
         for s in self.zastavky:
             self.play(k.velikost_uhlu.animate.set_value(s * DEGREES), run_time=4, rate_func=smooth)
-            self.play(Transform(pocet_tristasedesatek, MathTex("= " + str(s//360) + " \cdot 360^{\circ} + 60^{\circ}").next_to(k.misto_pro_pocitani, DOWN, aligned_edge=LEFT)))
+            self.wait(1)
             self.next_slide()
+            pocet_tristasedesatek = MathTex("= " + str(s//360) + " \cdot 360^{\circ} + 60^{\circ}").next_to(k.misto_pro_pocitani, DOWN, aligned_edge=LEFT)
+            self.play(Write(pocet_tristasedesatek))
+            self.next_slide()
+            self.play(FadeOut(pocet_tristasedesatek))
 
 class Stupne_or_uhel_plus(Stupne_or_uhel):
     zastavky = [420, 780, 1500]

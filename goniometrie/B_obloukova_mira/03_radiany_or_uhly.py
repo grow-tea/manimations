@@ -10,24 +10,41 @@ from goniometrie.jednotkova_kruznice import *
 class Radiany_or_uhel_ekvivalence(Slide):
     def construct(self):
         
-        k = Jednotkova_kruznice(cil_rad)
+        
+        cil_rad = - PI/4
+        minus_cil_rad = -cil_rad
+        minus_cil_rad_tex = r"\frac{\pi}{4}"
+        radiany = [7/4*PI, -1/4*PI]
+        radiany_tex = [r"\frac{7 \pi}{4}", r"\frac{- \pi}{4}"]
+        radiany_tex_rozeps = [
+            r"\frac{7 \pi}{4}",
+            r"\frac{- \pi}{4}",
+        ]
+
+        k = Jednotkova_kruznice(0)
         self.add(
             k.kruznice, k.osy,
             k.bodA, k.bodB, k.bodV,
             k.kruznicovy_oblouk_AB,
-            k.get_text_radiany(cil_rad_tex)
         )
+
+        self.play(k.velikost_uhlu.animate.set_value(minus_cil_rad), run_time=3, rate_func=smooth)
+        text =k.udelej_delka_text(minus_cil_rad, minus_cil_rad_tex)
+        self.next_slide()
+        self.play(Write(text))
+        self.wait(1)
+        self.next_slide()
+        usecka = DashedLine(k.misto_na_kruznici(minus_cil_rad), k.misto_na_kruznici(cil_rad))
+        self.play(Create(usecka))
+        self.play(Unwrite(text))
+        self.play(k.velikost_uhlu.animate.set_value(cil_rad), run_time=3)
+        self.wait(1)
+        self.play(Flash(k.bodB))
+        self.play(Uncreate(usecka), Uncreate(k.kruznicovy_oblouk_AB))
+        self.wait(1)
+        self.next_slide()
         
-        cil_rad = 7/6*PI
-        cil_rad_tex = r"\frac{7 \pi}{6}"
-        radiany = [7/6*PI, 7/6*PI + 2*PI, 7/6*PI - 2*PI, 7/6*PI + 4*PI]
-        radiany_tex = [r"\frac{7 \pi}{6}", r"\frac{19 \pi}{6}", r"-\frac{5 \pi}{6}", r"\frac{31 \pi}{6}"]
-        radiany_tex_rozeps = [
-            r"\frac{7 \pi}{6}",
-            r"\frac{7 \pi}{6} + 2 \pi",
-            r"\frac{7 \pi}{6} - 2 \pi",
-            r"\frac{7 \pi}{6} + 4 \pi"
-        ]
+
 
         for i in range(len(radiany)):
             k.animuj_pohyb_po_kruznici(self, 0, radiany[i], run_time=3)
@@ -36,7 +53,7 @@ class Radiany_or_uhel_ekvivalence(Slide):
             self.wait(1)
             self.next_slide()
             self.play(Transform(delka_text, k.udelej_delka_text(radiany[i], radiany_tex[i])))
-            self.play(delka_text.copy().animate.move_to(k.osy.c2p(0.3 + i*0.5, -1.2)))
+            self.play(delka_text.copy().animate.move_to(k.osy.c2p(-1.9 + i*0.5, -1.2)))
             k.odstran_pohyb_po_kruznici(self)
             self.play(FadeOut(delka_text))
             self.wait(1)

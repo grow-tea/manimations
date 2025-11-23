@@ -25,11 +25,14 @@ class Zlomky_na_radiany(Slide):
             self.wait(1)
             self.next_slide() 
             zlomek = MathTex(zlomky[i], color=VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
-            self.play(FadeIn(k.vysec, run_time=1))
+            self.play(FadeIn(k.vysec.update(), run_time=1))
             self.play(Write(zlomek))
-
+            self.wait(1)
+            self.next_slide()
             vypocet = MathTex(r"2 \pi \cdot " + zlomky[i] + "=" + radiany_tex[i]).move_to(k.misto_pro_pocitani)
             self.play(Write(vypocet))
+            self.wait(1)
+            self.next_slide()
             k.animuj_pohyb_po_kruznici(self, 0, radiany[i], run_time=2)
             delka_text = k.udelej_delka_text(radiany[i], radiany_tex[i])
             self.play(Write(delka_text))
@@ -57,6 +60,8 @@ class Radiany_na_stupne(Slide):
 
         for i in range(len(radiany)):
             self.play(k.velikost_uhlu.animate.set_value(radiany[i]), run_time=3, rate_func=smooth)
+            self.wait(1)
+            self.next_slide()
             delka_text = k.udelej_delka_text(radiany[i], radiany_tex[i])
             self.play(Write(delka_text))
             self.wait(1)
@@ -64,7 +69,8 @@ class Radiany_na_stupne(Slide):
             grupa_ke_stupnum.update()
             self.play(FadeIn(grupa_ke_stupnum))
             self.play(FadeIn(k.vysec.update()))
-            
+            self.wait(1)
+            self.next_slide()
             vypocet = MathTex(r"\frac{" + radiany_tex[i] + "}{2 \pi} = " + zlomky[i]).move_to(k.misto_pro_pocitani)
             zlomek = MathTex(zlomky[i], color=VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
             self.play(Write(vypocet))

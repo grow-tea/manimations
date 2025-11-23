@@ -11,6 +11,7 @@ KLADNE_OTOCENI_BARVA = GREEN
 ZAPORNE_OTOCENI_BARVA = ORANGE
 OBRAZ_BARVA = XKCD.AVOCADO
 KRUHOVY_OBLOUK_BARVA = TEAL
+KRUHOVY_OBLOUK_ZAPORNE_BARVA = ORANGE
 
 def do_poloprimky(usecka, ratio=100):
     delta = usecka.end - usecka.start
@@ -28,11 +29,18 @@ class Jednotkova_kruznice():
         return self.osy.c2p(x, y)
     
     def udelej_kruznicovy_oblouk(self, vel_uhlu_start, vel_uhlu_end):
-        return self.osy.plot_parametric_curve(
-            lambda t: np.array([np.cos(t),np.sin(t),0]),
-            t_range=[vel_uhlu_start, vel_uhlu_end],
-            color=KRUHOVY_OBLOUK_BARVA,
-        )
+        if (vel_uhlu_start < vel_uhlu_end):
+            return self.osy.plot_parametric_curve(
+                lambda t: np.array([np.cos(t),np.sin(t),0]),
+                t_range=[vel_uhlu_start, vel_uhlu_end],
+                color=KRUHOVY_OBLOUK_BARVA,
+            )
+        else:
+            return self.osy.plot_parametric_curve(
+                lambda t: np.array([np.cos(t),np.sin(t),0]),
+                t_range=[vel_uhlu_end, vel_uhlu_start],     # obracene
+                color=KRUHOVY_OBLOUK_ZAPORNE_BARVA,
+            )
     
     def misto_pro_text_vysec(self):
         return self.misto_na_kruznici(self.velikost_uhlu.get_value() / 2) * 0.7
@@ -68,10 +76,11 @@ class Jednotkova_kruznice():
     
     def animuj_pohyb_po_kruznici(self, slides, vel_uhlu_start, vel_uhlu_cil, run_time=3):
         vt = ValueTracker(vel_uhlu_start)
+        
         self.bod_pohybpokruznici = always_redraw(
             lambda: Dot(
                 self.misto_na_kruznici(vt.get_value()),
-                color=KRUHOVY_OBLOUK_BARVA)
+                color=KRUHOVY_OBLOUK_BARVA if vel_uhlu_cil > vel_uhlu_start else KRUHOVY_OBLOUK_ZAPORNE_BARVA)
         )
         self.oblouk_pohybpokruznici = always_redraw(
             lambda: self.udelej_kruznicovy_oblouk(vel_uhlu_start, vt.get_value())
