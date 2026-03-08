@@ -5,6 +5,7 @@ from manim_slides import Slide
 import os, sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from goniometrie.jednotkova_kruznice import *
+from goniometrie.config import GonioStyle as gs
 
 class Stupne_symetrie(Slide):
 
@@ -28,7 +29,7 @@ class Stupne_symetrie(Slide):
         )
 
         cilova_pozice = k.misto_na_kruznici((self.operace(self.poc_uhel)) * DEGREES)
-        cilovy_bod = Dot(cilova_pozice, color=BODY_BARVA2)
+        cilovy_bod = Dot(cilova_pozice, color=gs.BODY_BARVA2)
         usecka = DashedLine(k.bodB.get_center(), cilova_pozice)
 
         self.next_slide()
@@ -36,10 +37,10 @@ class Stupne_symetrie(Slide):
         self.play(Flash(cilovy_bod))
         self.next_slide()
 
-        poloprVB_obraz = do_poloprimky(Line(k.osy.c2p(0,0), cilova_pozice, color=OBRAZ_BARVA))
-        poloprVA_obraz = do_poloprimky(Line(k.osy.c2p(0,0), k.misto_na_kruznici(self.operace(0)*DEGREES), color=OBRAZ_BARVA))
-        uhel_symbol_obraz = Angle(poloprVB_obraz, poloprVA_obraz, radius=0.5, color=OBRAZ_BARVA) if not self.A_to_B \
-            else Angle(poloprVA_obraz, poloprVB_obraz, radius=0.5, color=OBRAZ_BARVA)
+        poloprVB_obraz = do_poloprimky(Line(k.osy.c2p(0,0), cilova_pozice, color=gs.OBRAZ_BARVA))
+        poloprVA_obraz = do_poloprimky(Line(k.osy.c2p(0,0), k.misto_na_kruznici(self.operace(0)*DEGREES), color=gs.OBRAZ_BARVA))
+        uhel_symbol_obraz = Angle(poloprVB_obraz, poloprVA_obraz, radius=0.5, color=gs.OBRAZ_BARVA) if not self.A_to_B \
+            else Angle(poloprVA_obraz, poloprVB_obraz, radius=0.5, color=gs.OBRAZ_BARVA)
         uhel_text_obraz = Integer(self.poc_uhel, unit=r"^{\circ}").move_to(k.misto_pod_uhlem(self.operace(self.poc_uhel/2)*DEGREES))
 
         self.vyraz.move_to(k.misto_pro_pocitani)

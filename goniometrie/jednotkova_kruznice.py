@@ -2,16 +2,7 @@ from manim import *
 from manim_slides import Slide
 import numpy as np
 
-KRUZNICE_BARVA = GREY
-BODY_BARVA = RED
-BODY_BARVA2 = BLUE
-UHEL_BARVA = YELLOW
-VYSEC_BARVA = PURPLE
-KLADNE_OTOCENI_BARVA = GREEN
-ZAPORNE_OTOCENI_BARVA = ORANGE
-OBRAZ_BARVA = XKCD.AVOCADO
-KRUHOVY_OBLOUK_BARVA = TEAL
-KRUHOVY_OBLOUK_ZAPORNE_BARVA = ORANGE
+from .config import GonioStyle as gs
 
 def do_poloprimky(usecka, ratio=100):
     delta = usecka.end - usecka.start
@@ -33,13 +24,13 @@ class Jednotkova_kruznice():
             return self.osy.plot_parametric_curve(
                 lambda t: np.array([np.cos(t),np.sin(t),0]),
                 t_range=[vel_uhlu_start, vel_uhlu_end],
-                color=KRUHOVY_OBLOUK_BARVA,
+                color=gs.KRUHOVY_OBLOUK_BARVA,
             )
         else:
             return self.osy.plot_parametric_curve(
                 lambda t: np.array([np.cos(t),np.sin(t),0]),
                 t_range=[vel_uhlu_end, vel_uhlu_start],     # obracene
-                color=KRUHOVY_OBLOUK_ZAPORNE_BARVA,
+                color=gs.KRUHOVY_OBLOUK_ZAPORNE_BARVA,
             )
     
     def misto_pro_text_vysec(self):
@@ -59,7 +50,7 @@ class Jednotkova_kruznice():
         return self.misto_pod_uhlem(vel_uhlu / 3)
     
     def bod_na_kruznici(self, vel_uhlu):
-        return Dot(self.misto_na_kruznici(vel_uhlu),color=BODY_BARVA2)
+        return Dot(self.misto_na_kruznici(vel_uhlu),color=gs.BODY_BARVA2)
 
     def get_stupne(self):
         return round(self.velikost_uhlu.get_value() / DEGREES)
@@ -80,7 +71,7 @@ class Jednotkova_kruznice():
         self.bod_pohybpokruznici = always_redraw(
             lambda: Dot(
                 self.misto_na_kruznici(vt.get_value()),
-                color=KRUHOVY_OBLOUK_BARVA if vel_uhlu_cil > vel_uhlu_start else KRUHOVY_OBLOUK_ZAPORNE_BARVA)
+                color=gs.KRUHOVY_OBLOUK_BARVA if vel_uhlu_cil > vel_uhlu_start else gs.KRUHOVY_OBLOUK_ZAPORNE_BARVA)
         )
         self.oblouk_pohybpokruznici = always_redraw(
             lambda: self.udelej_kruznicovy_oblouk(vel_uhlu_start, vt.get_value())
@@ -94,45 +85,53 @@ class Jednotkova_kruznice():
         del self.oblouk_pohybpokruznici
 
     def udelej_delka_text(self, vel_uhlu, text_tex):
-        return MathTex(text_tex, color=KRUHOVY_OBLOUK_BARVA).scale(0.8).move_to(self.misto_znak_u_kruznice(vel_uhlu, vpravo=True))
+        return MathTex(text_tex, color=gs.KRUHOVY_OBLOUK_BARVA).scale(0.8).move_to(self.misto_znak_u_kruznice(vel_uhlu, vpravo=True))
         
+    def get_bod_x_souradnice(self, vel_uhlu):
+        x = np.cos(vel_uhlu)
+        return self.osy.c2p(x, 0)
+    
+    def get_bod_y_souradnice(self, vel_uhlu):
+        y = np.sin(vel_uhlu)
+        return self.osy.c2p(0, y)
 
-    def __init__(self, poc_vel_uhlu=90*DEGREES):
+
+    def __init__(self, poc_vel_uhlu=90*DEGREES, osy_config = gs.OSY_CONFIG, posun = None, rotace = 0):
 
         # Definovani os x a y
-        self.osy = Axes( 
-            x_range=(-1.3, 1.3, 0.1),
-            y_range=(-1.3, 1.3, 0.1),
-            x_length=7,
-            y_length=7,
-            axis_config={"include_numbers": False, "include_tip": False, "include_ticks": False},
-            color=GREY,
-        )
+        self.osy = Axes(**osy_config).rotate(rotace)
+
+        # pro specialni pripad posunu celeho objektu nekam
+        if (posun is not None):
+            self.osy.to_edge(posun, buff=1)
 
         # Definovani kruznice
         self.kruznice = self.osy.plot_parametric_curve(
             lambda t: np.array([np.cos(t),np.sin(t),0]),
             t_range=[0, 2 * PI],
-            color=KRUZNICE_BARVA,
+            color=gs.KRUZNICE_BARVA,
         )
 
         self.velikost_uhlu = ValueTracker(poc_vel_uhlu)
 
-        self.bodA = Dot(self.misto_na_kruznici(0), color=BODY_BARVA)
-        self.bodV = Dot(self.osy.c2p(0,0), color=BODY_BARVA)
+        self.bodA = Dot(self.misto_na_kruznici(0), color=gs.BODY_BARVA)
+        self.bodV = Dot(self.osy.c2p(0,0), color=gs.BODY_BARVA)
         self.bodB = always_redraw(lambda: Dot(
             self.misto_na_kruznici(self.velikost_uhlu.get_value()),
-            color=BODY_BARVA)
+            color=gs.BODY_BARVA)
         )  # ten pohyblivy, souradnice se budou menit
         
         self.znakA = MathTex("A").next_to(self.bodA, UR)
         self.znakV = MathTex("V").next_to(self.bodV, DR * 0.5)
         self.znakB = MathTex("B").add_updater(lambda m:m.move_to(self.misto_znak_u_kruznice(self.velikost_uhlu.get_value())))
         
+        self.useckaVA = Line(self.bodV, self.bodA)
         self.poloprVA = do_poloprimky(Line(self.bodV, self.bodA))
+
+        self.useckaVB = always_redraw(lambda: Line(self.bodV.get_center(), self.bodB))
         self.poloprVB = always_redraw(lambda: do_poloprimky(Line(self.bodV.get_center(), self.bodB)))
 
-        self.uhel_symbol = always_redraw(lambda: Angle(self.poloprVA, self.poloprVB, radius=0.5, color=UHEL_BARVA))
+        self.uhel_symbol = always_redraw(lambda: Angle(self.poloprVA, self.poloprVB, radius=0.5, color=gs.UHEL_BARVA))
 
         self.text_stupne = always_redraw(lambda: Integer(self.get_stupne_norm(), unit=r"^{\circ}").move_to(self.misto_u_uhel_symbol()))   
 
@@ -140,7 +139,7 @@ class Jednotkova_kruznice():
             arc_center=self.bodV.get_center(),
             radius=self.osy.get_x_unit_size(),
             angle=self.velikost_uhlu.get_value(),
-            color=VYSEC_BARVA,
+            color=gs.VYSEC_BARVA,
             fill_opacity=0.2,
         ))
 
@@ -155,3 +154,54 @@ class Jednotkova_kruznice():
         )
 
         self.misto_pro_pocitani = self.osy.c2p(1.5, 1.2)
+
+        ### pro zavedeni funkci sinus a kosinus
+
+        self.usecka_na_ose_x = always_redraw(lambda: Line(
+            self.bodV.get_center(),
+            self.get_bod_x_souradnice(self.velikost_uhlu.get_value()),
+            color = gs.COS_BARVA,
+            stroke_width = 8
+        ))
+
+        self.usecka_na_ose_y = always_redraw(lambda: Line(
+            self.bodV.get_center(),
+            self.get_bod_y_souradnice(self.velikost_uhlu.get_value()),
+            color = gs.SIN_BARVA,
+            stroke_width = 8
+        ))
+
+        self.kolmice_k_ose_x = always_redraw(lambda: DashedLine(
+            self.misto_na_kruznici(self.velikost_uhlu.get_value()),
+            self.get_bod_x_souradnice(self.velikost_uhlu.get_value())
+        ))
+
+        self.kolmice_k_ose_y = always_redraw(lambda: DashedLine(
+            self.misto_na_kruznici(self.velikost_uhlu.get_value()),
+            self.get_bod_y_souradnice(self.velikost_uhlu.get_value())
+        ))
+
+        self.souradnice_grupa = VGroup(
+            self.usecka_na_ose_x,
+            self.usecka_na_ose_y,
+            self.kolmice_k_ose_x,
+            self.kolmice_k_ose_y
+        )
+
+
+        self.sin_stupne = always_redraw(lambda:
+            MathTex(
+                f"\\sin({self.get_stupne()}^\\circ)",
+                font_size = gs.GONIO_FONT_VELIKOST,
+                color = gs.SIN_BARVA,
+            ).next_to(self.usecka_na_ose_y.get_center(), LEFT + 0.2*UP)
+        )
+
+        relative_down = rotate_vector(DOWN, rotace)
+        self.cos_stupne = always_redraw(lambda:
+            MathTex(
+                f"\\cos({self.get_stupne()}^\\circ)",
+                font_size = gs.GONIO_FONT_VELIKOST,
+                color = gs.COS_BARVA,
+            ).rotate(rotace).next_to(self.usecka_na_ose_x.get_center(), relative_down)
+        )

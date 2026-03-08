@@ -5,7 +5,7 @@ from manim_slides import Slide
 import os, sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from goniometrie.jednotkova_kruznice import *
-
+from goniometrie.config import GonioStyle as gs
 
 class Smery_otaceni(Slide):
 
@@ -27,7 +27,7 @@ class Smery_otaceni(Slide):
             self.play(Flash(bod_hadej))
             self.next_slide()
             
-            barva = KLADNE_OTOCENI_BARVA if s - stare_s > 0 else ZAPORNE_OTOCENI_BARVA
+            barva = gs.KLADNE_OTOCENI_BARVA if s - stare_s > 0 else gs.ZAPORNE_OTOCENI_BARVA
             pomocna_tecna = TangentLine(k.kruznice, alpha=stare_s*DEGREES/2/PI)
             vektor_tecny = pomocna_tecna.get_unit_vector() * np.sign(s - stare_s)
             koncovy_bod = k.bodB.get_center() + vektor_tecny

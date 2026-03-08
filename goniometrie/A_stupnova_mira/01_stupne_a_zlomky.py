@@ -5,11 +5,12 @@ from manim_slides import Slide
 import os, sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from goniometrie.jednotkova_kruznice import *
+from goniometrie.config import GonioStyle as gs
 
 class Zlomky_na_stupne(Slide):
 
     def construct(self):
-        k = Jednotkova_kruznice(90*DEGREES)
+        k = Jednotkova_kruznice(1*DEGREES)
         self.add(
             k.kruznice, k.osy,
             k.AVBgrupa,
@@ -25,7 +26,7 @@ class Zlomky_na_stupne(Slide):
             self.play(k.velikost_uhlu.animate.set_value(s * DEGREES), run_time=3, rate_func=smooth)
             self.wait(1)
             self.next_slide()
-            zlomek = MathTex(stupne_a_zlomky[s], color=VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(stupne_a_zlomky[s], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
             self.play(FadeIn(k.vysec.update(), run_time=1))
             self.next_slide()
             self.play(Write(zlomek))
@@ -60,7 +61,7 @@ class Stupne_na_zlomky(Slide):
         for s in stupne_a_zlomky.keys():
             self.play(k.velikost_uhlu.animate.set_value(s * DEGREES), run_time=3, rate_func=smooth)
             self.wait(1)
-            zlomek = MathTex(stupne_a_zlomky[s], color=VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(stupne_a_zlomky[s], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
             self.play(FadeIn(k.vysec.update()))
             self.wait(1)
             self.next_slide()

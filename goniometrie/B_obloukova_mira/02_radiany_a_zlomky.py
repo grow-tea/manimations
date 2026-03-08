@@ -5,6 +5,7 @@ from manim_slides import Slide
 import os, sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from goniometrie.jednotkova_kruznice import *
+from goniometrie.config import GonioStyle as gs
 
 class Zlomky_na_radiany(Slide):
 
@@ -24,7 +25,7 @@ class Zlomky_na_radiany(Slide):
             self.play(k.velikost_uhlu.animate.set_value(radiany[i]), run_time=3, rate_func=smooth)
             self.wait(1)
             self.next_slide() 
-            zlomek = MathTex(zlomky[i], color=VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(zlomky[i], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
             self.play(FadeIn(k.vysec.update(), run_time=1))
             self.play(Write(zlomek))
             self.wait(1)
@@ -72,7 +73,7 @@ class Radiany_na_stupne(Slide):
             self.wait(1)
             self.next_slide()
             vypocet = MathTex(r"\frac{" + radiany_tex[i] + "}{2 \pi} = " + zlomky[i]).move_to(k.misto_pro_pocitani)
-            zlomek = MathTex(zlomky[i], color=VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(zlomky[i], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
             self.play(Write(vypocet))
             self.play(Write(zlomek))
             self.wait(1)

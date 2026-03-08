@@ -54,9 +54,9 @@ class Stupne_or_uhel_ekvivalence(Slide):
         cil_pozice = k.misto_na_kruznici(cil_stupen*DEGREES)
         cil_bod = k.bod_na_kruznici(cil_stupen*DEGREES)
         cil_polopr = do_poloprimky(Line(k.osy.c2p(0,0), cil_pozice))
-        cil_polopr.color = OBRAZ_BARVA
-        cil_uhel = Angle(k.poloprVA, cil_polopr, radius=0.5, color=OBRAZ_BARVA)
-        cil_uhel_text = Integer(cil_stupen, unit="^{\circ}", color=OBRAZ_BARVA).move_to(k.misto_pod_uhlem((cil_stupen-15)*DEGREES))
+        cil_polopr.color = gs.OBRAZ_BARVA
+        cil_uhel = Angle(k.poloprVA, cil_polopr, radius=0.5, color=gs.OBRAZ_BARVA)
+        cil_uhel_text = Integer(cil_stupen, unit="^{\circ}", color=gs.OBRAZ_BARVA).move_to(k.misto_pod_uhlem((cil_stupen-15)*DEGREES))
 
         self.add(
             k.kruznice, k.osy,

@@ -1,2 +1,4 @@
+source .venv/bin/activate
+
 manim -pql 01-pythagoras.py Pythagoras && manim-slides convert Pythagoras scene.html
 
