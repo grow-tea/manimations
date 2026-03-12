@@ -9,6 +9,9 @@ from goniometrie.config import GonioStyle as gs
 
 class Zlomky_na_stupne(Slide):
 
+    # pro vyreseni bugu, ze se neda video vyrenderovat
+    max_duration_before_split_reverse = None
+
     def construct(self):
         k = Jednotkova_kruznice(1*DEGREES)
         self.add(
@@ -43,6 +46,9 @@ class Zlomky_na_stupne(Slide):
 
 
 class Stupne_na_zlomky(Slide):
+
+    # pro vyreseni bugu, ze se neda video vyrenderovat
+    max_duration_before_split_reverse = None
 
     def construct(self):
         k = Jednotkova_kruznice(90*DEGREES)

@@ -48,7 +48,7 @@ class Jednotkova_kruznice():
         if vel_uhlu < 30 * DEGREES:
             return self.misto_pod_uhlem(vel_uhlu + 10*DEGREES)
         return self.misto_pod_uhlem(vel_uhlu / 3)
-    
+
     def bod_na_kruznici(self, vel_uhlu):
         return Dot(self.misto_na_kruznici(vel_uhlu),color=gs.BODY_BARVA2)
 
@@ -96,10 +96,10 @@ class Jednotkova_kruznice():
         return self.osy.c2p(0, y)
 
 
-    def __init__(self, poc_vel_uhlu=90*DEGREES, osy_config = gs.OSY_CONFIG, posun = None, rotace = 0):
-
+    def __init__(self, poc_vel_uhlu=90*DEGREES, osy_config = gs.OSY_CONFIG, posun = None, rotace = 0, zmena_velikosti = 1):
+        
         # Definovani os x a y
-        self.osy = Axes(**osy_config).rotate(rotace)
+        self.osy = Axes(**osy_config).rotate(rotace).scale(zmena_velikosti)
 
         # pro specialni pripad posunu celeho objektu nekam
         if (posun is not None):
@@ -131,7 +131,7 @@ class Jednotkova_kruznice():
         self.useckaVB = always_redraw(lambda: Line(self.bodV.get_center(), self.bodB))
         self.poloprVB = always_redraw(lambda: do_poloprimky(Line(self.bodV.get_center(), self.bodB)))
 
-        self.uhel_symbol = always_redraw(lambda: Angle(self.poloprVA, self.poloprVB, radius=0.5, color=gs.UHEL_BARVA))
+        self.uhel_symbol = always_redraw(lambda: Angle(self.poloprVA, self.poloprVB, **gs.UHEL_SYMBOL))
 
         self.text_stupne = always_redraw(lambda: Integer(self.get_stupne_norm(), unit=r"^{\circ}").move_to(self.misto_u_uhel_symbol()))   
 
@@ -139,8 +139,7 @@ class Jednotkova_kruznice():
             arc_center=self.bodV.get_center(),
             radius=self.osy.get_x_unit_size(),
             angle=self.velikost_uhlu.get_value(),
-            color=gs.VYSEC_BARVA,
-            fill_opacity=0.2,
+            **gs.VYSEC,
         ))
 
         self.AVBgrupa = VGroup(
@@ -192,8 +191,7 @@ class Jednotkova_kruznice():
         self.sin_stupne = always_redraw(lambda:
             MathTex(
                 f"\\sin({self.get_stupne()}^\\circ)",
-                font_size = gs.GONIO_FONT_VELIKOST,
-                color = gs.SIN_BARVA,
+                **gs.SIN_TEXT,
             ).next_to(self.usecka_na_ose_y.get_center(), LEFT + 0.2*UP)
         )
 
@@ -201,7 +199,6 @@ class Jednotkova_kruznice():
         self.cos_stupne = always_redraw(lambda:
             MathTex(
                 f"\\cos({self.get_stupne()}^\\circ)",
-                font_size = gs.GONIO_FONT_VELIKOST,
-                color = gs.COS_BARVA,
+                **gs.COS_TEXT,
             ).rotate(rotace).next_to(self.usecka_na_ose_x.get_center(), relative_down)
         )

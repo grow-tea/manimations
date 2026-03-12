@@ -9,7 +9,7 @@ class GonioStyle:
     VYSEC_BARVA = PURPLE
     KLADNE_OTOCENI_BARVA = GREEN
     ZAPORNE_OTOCENI_BARVA = ORANGE
-    OBRAZ_BARVA = XKCD.AVOCADO
+    OBRAZ_BARVA = MAROON
     KRUHOVY_OBLOUK_BARVA = TEAL
     KRUHOVY_OBLOUK_ZAPORNE_BARVA = ORANGE
 
@@ -58,4 +58,25 @@ class GonioStyle:
             "include_ticks": True
         },
         "color": GREY,
+    }
+
+    UHEL_SYMBOL = {
+        "radius": 0.5,
+        "color": UHEL_BARVA
+    }
+
+    SIN_TEXT = {
+        "color": SIN_BARVA,
+        "font_size": 40
+    }
+
+    COS_TEXT = {
+        "color": COS_BARVA,
+        "font_size": 40
+    }
+
+    VYSEC = {
+        "color": VYSEC_BARVA,
+        "fill_opacity": 0.4,
+        "z_index": -1,  # pod ostatnimi
     }
