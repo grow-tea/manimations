@@ -30,11 +30,13 @@ class Stupne_na_zlomky(Slide):
         for s in stupne_a_zlomky.keys():
             self.play(k.velikost_uhlu.animate.set_value(s * DEGREES), run_time=3, rate_func=smooth)
             self.wait(1)
-            zlomek = MathTex(stupne_a_zlomky[s], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(stupne_a_zlomky[s], **gs.VYSEC_TEXT).move_to(k.misto_pro_text_vysec())
             self.play(FadeIn(k.vysec.update()))
             self.wait(1)
             self.next_slide()
-            vypocet = MathTex(r"\frac{" + str(s) + "^{\circ}}{360^{\circ}} = " + stupne_a_zlomky[s]).move_to(k.misto_pro_pocitani)
+            vypocet = MathTex(
+                r"\frac{" + str(s) + "^{\circ}}{360^{\circ}} = " + stupne_a_zlomky[s]
+                ).move_to(k.misto_pro_pocitani).add_background_rectangle(**gs.BACKGROUND_RECTANGLE)
             self.play(Write(vypocet))
             self.play(Write(zlomek))
             self.wait(1)

@@ -2,22 +2,75 @@ from manim import *
     
 class GonioStyle:
     
-    KRUZNICE_BARVA = GREY
-    BODY_BARVA = RED
-    BODY_BARVA2 = BLUE
-    UHEL_BARVA = YELLOW
-    VYSEC_BARVA = PURPLE
-    KLADNE_OTOCENI_BARVA = GREEN
-    ZAPORNE_OTOCENI_BARVA = ORANGE
-    OBRAZ_BARVA = MAROON
-    KRUHOVY_OBLOUK_BARVA = TEAL
-    KRUHOVY_OBLOUK_ZAPORNE_BARVA = ORANGE
-
-    SIN_BARVA = BLUE
-    COS_BARVA = RED
-    GONIO_FONT_VELIKOST = 40
-
+    # sablona
+    KRUZNICE = {"color": GREY, "z_index": -2}
     TLOUSTKA_KRUZNICE = 2
+    POMOCNA_CARA = {"color": WHITE, "z_index": -1}
+
+    # zakladni nastroje (poloprimky maji defaultni bilou barvu)
+    BOD_POHYB= {"color": RED, "z_index": 2}
+    BOD_STATIC = {"color": RED_A, "z_index":1}
+    POLOMER_TEXT = {"color": RED}
+    POLOMER_USECKA = {"color": RED, "stroke_width": 4}
+    
+    # pro stupnovou miru
+    UHEL_BARVA = YELLOW
+    UHEL_SYMBOL = {"radius": 0.5, "color": UHEL_BARVA, "z_index": 0}
+    UHEL_LABEL = {"color": YELLOW, "z_index": 1}
+    UHEL_SVISLICE = {"color": YELLOW, "stroke_opacity": 0.5, "z_index": -2}
+
+    # pro obrazy, cile, veci k hadani
+    BOD_HADEJ = {"color": BLUE, "z_index": 1}
+    OBRAZ = {"color": BLUE_E, "z_index": -1}
+    OBRAZ_TEXT = {"color": BLUE, "z_index": -1}
+    UHEL_SYMBOL_OBRAZ = {"radius": 0.5, "color": BLUE_E, "z_index": -1}
+    
+
+    # pro obloukovou miru
+    KLADNE_OTOCENI_BARVA = GREEN
+    ZAPORNE_OTOCENI_BARVA = GOLD
+    KRUZ_OBLOUK = {"color": GREEN_D, "stroke_width": 8}
+    KRUZ_OBLOUK_ZAPORNE = {"color": GOLD_D, "stroke_width": 8}
+    KRUZ_OBLOUK_BOD = {"color": GREEN_A, "z_index": 2}
+    KRUZ_OBLOUK_BOD_ZAP = {"color": GOLD_A, "z_index": 2}
+    KRUZ_OBLOUK_TEXT = {"color": GREEN_A, "font_size": 40}
+    KRUZ_OBLOUK_TEXT_ZAP = {"color": GOLD_A, "font_size": 40}
+
+
+    # zlomky
+    VYSEC_BARVA = YELLOW_E
+    VYSEC = { "color": VYSEC_BARVA, "fill_opacity": 0.3, "z_index": -1 }
+    VYSEC_TEXT = {"color": YELLOW_A}
+
+
+    # sinus, kosinus
+    SIN_TEXT = {"color": TEAL, "font_size": 40, "z_index": 3}
+    SIN_BOD = {"color": TEAL_A, "z_index": 1}
+    SIN_USECKA = {"color": TEAL_D, "stroke_width": 8, "z_index": 0}
+    SINUSOIDA = {"stroke_color": TEAL_D, "stroke_width": 6}
+    
+    COS_TEXT = {"color": PURPLE_A, "font_size": 40, "z_index": 3}
+    COS_BOD = {"color": PURPLE_A, "z_index": 1}
+    COS_USECKA = {"color": PURPLE_B, "stroke_width": 8, "z_index": 0}
+    COSINUSOIDA = {"stroke_color": PURPLE_B, "stroke_width": 6}
+
+    # trojuhelnik zavedeni sin cos
+    TROJUHELNIK = {"fill_color": WHITE, "stroke_color": WHITE, "fill_opacity": 0.3, "z_index": 0}
+
+    # polarni souradnice
+    POLARNI_BACKGROUND_LINE = {
+        "stroke_color": BLUE_D,
+        "stroke_width": 2,
+        "stroke_opacity": 0.5
+    }
+    POLARNI_KRUZNICE = {"color": BLUE_E, "stroke_width": 6}
+
+    BACKGROUND_RECTANGLE = {
+        "color": BLACK,
+        "opacity": 0.75,
+        "buff": 0.2
+    }
+
 
     OSY_CONFIG = {
         "x_range": (-1.3, 1.3, 0.1),
@@ -30,6 +83,7 @@ class GonioStyle:
             "include_ticks": False
         },
         "color": GREY,
+        "z_index": -2
     }
 
     # pro zavedeni gonio fci
@@ -44,6 +98,7 @@ class GonioStyle:
             "include_ticks": True
         },
         "color": GREY,
+        "z_index": -2
     }
 
     # pro gonio nacrtnuti grafu
@@ -58,25 +113,5 @@ class GonioStyle:
             "include_ticks": True
         },
         "color": GREY,
-    }
-
-    UHEL_SYMBOL = {
-        "radius": 0.5,
-        "color": UHEL_BARVA
-    }
-
-    SIN_TEXT = {
-        "color": SIN_BARVA,
-        "font_size": 40
-    }
-
-    COS_TEXT = {
-        "color": COS_BARVA,
-        "font_size": 40
-    }
-
-    VYSEC = {
-        "color": VYSEC_BARVA,
-        "fill_opacity": 0.4,
-        "z_index": -1,  # pod ostatnimi
+        "z_index": -2
     }

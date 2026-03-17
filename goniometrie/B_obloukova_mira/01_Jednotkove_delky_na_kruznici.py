@@ -15,8 +15,8 @@ class Jednotkove_delky_na_kruznici(Slide):
         
         k = Jednotkova_kruznice(0)
         delka_text = k.udelej_delka_text(1, "1")
-        polomer = Line(k.osy.c2p(1,0),k.osy.c2p(0,0), color=RED)
-        znakR = MathTex("1").move_to(k.osy.c2p(0.5, -0.1))
+        polomer = Line(k.osy.c2p(1,0),k.osy.c2p(0,0), **gs.POLOMER_USECKA)
+        znakR = MathTex("1", **gs.POLOMER_TEXT).move_to(k.osy.c2p(0.5, -0.1))
 
         self.add(
             k.bodA, k.bodV, k.kruznice, k.znakA
@@ -27,7 +27,7 @@ class Jednotkove_delky_na_kruznici(Slide):
         body = []
         oblouky = []
         for i in range(0,6+1):
-            body.append(k.bod_na_kruznici(i))
+            body.append(k.bod_na_kruznici(i).set(**gs.KRUZ_OBLOUK_BOD))
             oblouky.append(k.udelej_kruznicovy_oblouk(i,i+1))
 
         self.next_slide()

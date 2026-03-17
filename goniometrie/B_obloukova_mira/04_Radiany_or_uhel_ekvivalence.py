@@ -17,12 +17,19 @@ class Radiany_or_uhel_ekvivalence(Slide):
         cil_rad = - PI/4
         minus_cil_rad = -cil_rad
         minus_cil_rad_tex = r"\frac{\pi}{4}"
-        radiany = [7/4*PI, -1/4*PI]
-        radiany_tex = [r"\frac{7 \pi}{4}", r"\frac{- \pi}{4}"]
+        radiany = [7/4*PI, -1/4*PI, 15/4*PI, -9/4*PI]
+        radiany_tex = [
+            r"\frac{7 \pi}{4}",
+            r"- \frac{\pi}{4}",
+            r"\frac{15 \pi}{4}",
+            r"- \frac{9 \pi}{4}"]
+
         radiany_tex_rozeps = [
             r"\frac{7 \pi}{4}",
-            r"\frac{- \pi}{4}",
-        ]
+            r"-\frac{\pi}{4}",
+            r"2\pi + \frac{7 \pi}{4}",
+            r"-2\pi - \frac{\pi}{4}"]
+
 
         k = Jednotkova_kruznice(0)
         self.add(
@@ -43,7 +50,14 @@ class Radiany_or_uhel_ekvivalence(Slide):
         self.play(k.velikost_uhlu.animate.set_value(cil_rad), run_time=3)
         self.wait(1)
         self.play(Flash(k.bodB))
-        self.play(Uncreate(usecka), Uncreate(k.kruznicovy_oblouk_AB))
+        poloprVB_obraz = do_poloprimky(Line(k.bodV, k.bodB)).set(**gs.OBRAZ)
+        poloprVA_obraz = do_poloprimky(Line(k.bodV, k.bodA).set(**gs.OBRAZ))
+        uhel_symbol_obraz = Angle(poloprVA_obraz, poloprVB_obraz, **gs.UHEL_SYMBOL_OBRAZ)
+        obraz = VGroup(poloprVB_obraz, poloprVA_obraz, uhel_symbol_obraz)
+        self.play(
+            Uncreate(usecka), Uncreate(k.kruznicovy_oblouk_AB),
+            Create(k.bod_na_kruznici(cil_rad)), Uncreate(k.bodB),
+            Write(obraz))
         self.wait(1)
         self.next_slide()
         
@@ -56,7 +70,7 @@ class Radiany_or_uhel_ekvivalence(Slide):
             self.wait(1)
             self.next_slide()
             self.play(Transform(delka_text, k.udelej_delka_text(radiany[i], radiany_tex[i])))
-            self.play(delka_text.copy().animate.move_to(k.osy.c2p(-1.9 + i*0.5, -1.2)))
+            self.play(delka_text.copy().animate.move_to(k.osy.c2p(-2.5 + i*0.5, -1.2)))
             k.odstran_pohyb_po_kruznici(self)
             self.play(FadeOut(delka_text))
             self.wait(1)

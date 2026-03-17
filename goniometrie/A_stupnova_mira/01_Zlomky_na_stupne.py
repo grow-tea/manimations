@@ -29,7 +29,7 @@ class Zlomky_na_stupne(Slide):
             self.play(k.velikost_uhlu.animate.set_value(s * DEGREES), run_time=3, rate_func=smooth)
             self.wait(1)
             self.next_slide()
-            zlomek = MathTex(stupne_a_zlomky[s], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(stupne_a_zlomky[s], **gs.VYSEC_TEXT).move_to(k.misto_pro_text_vysec())
             self.play(FadeIn(k.vysec.update(), run_time=1))
             self.next_slide()
             self.play(Write(zlomek))

@@ -14,7 +14,7 @@ class Zlomky_na_radiany(Slide):
     
     def construct(self):
         k = Jednotkova_kruznice(PI/2)
-        znakR = MathTex("1").move_to(k.osy.c2p(0.5, -0.1))
+        znakR = MathTex("1", **gs.POLOMER_TEXT).move_to(k.osy.c2p(0.5, -0.1))
         self.add(
             k.kruznice, k.osy,
             k.AVBgrupa, znakR,
@@ -28,7 +28,7 @@ class Zlomky_na_radiany(Slide):
             self.play(k.velikost_uhlu.animate.set_value(radiany[i]), run_time=3, rate_func=smooth)
             self.wait(1)
             self.next_slide() 
-            zlomek = MathTex(zlomky[i], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(zlomky[i], **gs.VYSEC_TEXT).move_to(k.misto_pro_text_vysec())
             self.play(FadeIn(k.vysec.update(), run_time=1))
             self.play(Write(zlomek))
             self.wait(1)

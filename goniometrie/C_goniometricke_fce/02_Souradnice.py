@@ -10,12 +10,19 @@ from goniometrie.jednotkova_kruznice import *
   
 class Souradnice(Slide):
 
+    # pro vyreseni bugu, ze se neda video vyrenderovat
+    max_duration_before_split_reverse = None
+
     def construct(self):
         
-        k = Jednotkova_kruznice(0.1 * DEGREES, osy_config = gs.OSY_CONFIG_CARKY)
-        vsehogrupa = VGroup(k.useckaVA, k.useckaVB, k.souradnice_grupa, k.sin_stupne, k.cos_stupne) 
-        self.add(k.kruznice, k.osy, k.bodB, vsehogrupa)
-        
+        k = Jednotkova_kruznice(PI/3, osy_config = gs.OSY_CONFIG_CARKY)
+        uhel_symbol = always_redraw(lambda: Angle(k.useckaVA, k.useckaVB, **gs.UHEL_SYMBOL))    # puvodni definovany pro poloprimky
+        vsehogrupa = VGroup(k.useckaVA, k.useckaVB, k.sin_grupa, k.cos_grupa, k.sin_stupne, k.cos_stupne, uhel_symbol)
+        self.add(k.kruznice, k.osy, k.bodA, k.bodV, k.bodB, vsehogrupa)
+        self.play(k.velikost_uhlu.animate.set_value(0.1*DEGREES), run_time=2)
+        self.wait(1)
+        self.next_slide()
+
         # rozsah 0-360
         self.play(k.velikost_uhlu.animate.set_value(2 *PI), run_time=7, rate_func=linear)
         self.wait(1)

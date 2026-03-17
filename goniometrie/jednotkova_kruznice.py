@@ -24,13 +24,13 @@ class Jednotkova_kruznice():
             return self.osy.plot_parametric_curve(
                 lambda t: np.array([np.cos(t),np.sin(t),0]),
                 t_range=[vel_uhlu_start, vel_uhlu_end],
-                color=gs.KRUHOVY_OBLOUK_BARVA,
+                **gs.KRUZ_OBLOUK,
             )
         else:
             return self.osy.plot_parametric_curve(
                 lambda t: np.array([np.cos(t),np.sin(t),0]),
                 t_range=[vel_uhlu_end, vel_uhlu_start],     # obracene
-                color=gs.KRUHOVY_OBLOUK_ZAPORNE_BARVA,
+                **gs.KRUZ_OBLOUK_ZAPORNE,
             )
     
     def misto_pro_text_vysec(self):
@@ -41,7 +41,7 @@ class Jednotkova_kruznice():
         return self.misto_na_kruznici(vel_uhlu + posun) * 1.15
     
     def misto_pod_uhlem(self, vel_uhlu):
-        return self.misto_na_kruznici(vel_uhlu) * 0.45
+        return self.osy.c2p(0,0) * 0.55 + self.misto_na_kruznici(vel_uhlu) * 0.45
 
     def misto_u_uhel_symbol(self):
         vel_uhlu = norm(self.velikost_uhlu.get_value())
@@ -50,7 +50,7 @@ class Jednotkova_kruznice():
         return self.misto_pod_uhlem(vel_uhlu / 3)
 
     def bod_na_kruznici(self, vel_uhlu):
-        return Dot(self.misto_na_kruznici(vel_uhlu),color=gs.BODY_BARVA2)
+        return Dot(self.misto_na_kruznici(vel_uhlu), **gs.BOD_HADEJ)
 
     def get_stupne(self):
         return round(self.velikost_uhlu.get_value() / DEGREES)
@@ -71,7 +71,7 @@ class Jednotkova_kruznice():
         self.bod_pohybpokruznici = always_redraw(
             lambda: Dot(
                 self.misto_na_kruznici(vt.get_value()),
-                color=gs.KRUHOVY_OBLOUK_BARVA if vel_uhlu_cil > vel_uhlu_start else gs.KRUHOVY_OBLOUK_ZAPORNE_BARVA)
+                **gs.KRUZ_OBLOUK_BOD if vel_uhlu_cil > vel_uhlu_start else gs.KRUZ_OBLOUK_BOD_ZAP)
         )
         self.oblouk_pohybpokruznici = always_redraw(
             lambda: self.udelej_kruznicovy_oblouk(vel_uhlu_start, vt.get_value())
@@ -85,14 +85,17 @@ class Jednotkova_kruznice():
         del self.oblouk_pohybpokruznici
 
     def udelej_delka_text(self, vel_uhlu, text_tex):
-        return MathTex(text_tex, color=gs.KRUHOVY_OBLOUK_BARVA).scale(0.8).move_to(self.misto_znak_u_kruznice(vel_uhlu, vpravo=True))
+        return MathTex(
+            text_tex,
+            **gs.KRUZ_OBLOUK_TEXT if vel_uhlu > 0 else gs.KRUZ_OBLOUK_TEXT_ZAP,
+            ).move_to(self.misto_znak_u_kruznice(vel_uhlu, vpravo=True))
         
-    def get_bod_x_souradnice(self, vel_uhlu):
-        x = np.cos(vel_uhlu)
+    def get_bod_x_souradnice(self, vel_uhlu, polomer = 1):
+        x = np.cos(vel_uhlu) * polomer
         return self.osy.c2p(x, 0)
     
-    def get_bod_y_souradnice(self, vel_uhlu):
-        y = np.sin(vel_uhlu)
+    def get_bod_y_souradnice(self, vel_uhlu, polomer = 1):
+        y = np.sin(vel_uhlu) * polomer
         return self.osy.c2p(0, y)
 
 
@@ -109,16 +112,16 @@ class Jednotkova_kruznice():
         self.kruznice = self.osy.plot_parametric_curve(
             lambda t: np.array([np.cos(t),np.sin(t),0]),
             t_range=[0, 2 * PI],
-            color=gs.KRUZNICE_BARVA,
+            **gs.KRUZNICE
         )
 
         self.velikost_uhlu = ValueTracker(poc_vel_uhlu)
 
-        self.bodA = Dot(self.misto_na_kruznici(0), color=gs.BODY_BARVA)
-        self.bodV = Dot(self.osy.c2p(0,0), color=gs.BODY_BARVA)
+        self.bodA = Dot(self.misto_na_kruznici(0), **gs.BOD_STATIC)
+        self.bodV = Dot(self.osy.c2p(0,0), **gs.BOD_STATIC)
         self.bodB = always_redraw(lambda: Dot(
             self.misto_na_kruznici(self.velikost_uhlu.get_value()),
-            color=gs.BODY_BARVA)
+            **gs.BOD_POHYB)
         )  # ten pohyblivy, souradnice se budou menit
         
         self.znakA = MathTex("A").next_to(self.bodA, UR)
@@ -133,7 +136,12 @@ class Jednotkova_kruznice():
 
         self.uhel_symbol = always_redraw(lambda: Angle(self.poloprVA, self.poloprVB, **gs.UHEL_SYMBOL))
 
-        self.text_stupne = always_redraw(lambda: Integer(self.get_stupne_norm(), unit=r"^{\circ}").move_to(self.misto_u_uhel_symbol()))   
+        self.text_stupne = always_redraw(lambda: Integer(
+            self.get_stupne_norm(),
+            unit=r"^{\circ}")
+            .move_to(self.misto_u_uhel_symbol())
+            #.add_background_rectangle(**gs.BACKGROUND_RECTANGLE)
+        )
 
         self.vysec = always_redraw(lambda: Sector(
             arc_center=self.bodV.get_center(),
@@ -156,49 +164,61 @@ class Jednotkova_kruznice():
 
         ### pro zavedeni funkci sinus a kosinus
 
+        self.x = always_redraw(lambda: Dot(
+            self.get_bod_x_souradnice(self.velikost_uhlu.get_value()),
+            **gs.COS_BOD
+        ))
         self.usecka_na_ose_x = always_redraw(lambda: Line(
             self.bodV.get_center(),
-            self.get_bod_x_souradnice(self.velikost_uhlu.get_value()),
-            color = gs.COS_BARVA,
-            stroke_width = 8
+            self.x,
+            **gs.COS_USECKA,
         ))
 
+        self.y = always_redraw(lambda: Dot(
+            self.get_bod_y_souradnice(self.velikost_uhlu.get_value()),
+            **gs.SIN_BOD
+        ))
         self.usecka_na_ose_y = always_redraw(lambda: Line(
             self.bodV.get_center(),
-            self.get_bod_y_souradnice(self.velikost_uhlu.get_value()),
-            color = gs.SIN_BARVA,
-            stroke_width = 8
+            self.y,
+            **gs.SIN_USECKA,
         ))
 
         self.kolmice_k_ose_x = always_redraw(lambda: DashedLine(
             self.misto_na_kruznici(self.velikost_uhlu.get_value()),
-            self.get_bod_x_souradnice(self.velikost_uhlu.get_value())
+            self.get_bod_x_souradnice(self.velikost_uhlu.get_value()),
+            **gs.POMOCNA_CARA,
         ))
 
         self.kolmice_k_ose_y = always_redraw(lambda: DashedLine(
             self.misto_na_kruznici(self.velikost_uhlu.get_value()),
-            self.get_bod_y_souradnice(self.velikost_uhlu.get_value())
+            self.get_bod_y_souradnice(self.velikost_uhlu.get_value()),
+            **gs.POMOCNA_CARA,
         ))
 
-        self.souradnice_grupa = VGroup(
-            self.usecka_na_ose_x,
-            self.usecka_na_ose_y,
-            self.kolmice_k_ose_x,
-            self.kolmice_k_ose_y
+        self.sin_grupa = VGroup(self.y, self.usecka_na_ose_y, self.kolmice_k_ose_y)
+        self.cos_grupa = VGroup(self.x, self.usecka_na_ose_x, self.kolmice_k_ose_x)
+
+        sin_label = MathTex(r"\sin(", **gs.SIN_TEXT)
+        sin_zavorka = MathTex(r")", **gs.SIN_TEXT)
+        self.sin_stupne = always_redraw(lambda :VGroup(
+            sin_label, Integer(self.get_stupne(), unit=r"^{\circ}", **gs.SIN_TEXT), sin_zavorka)
+            .arrange(RIGHT, buff=0.1)
+            .next_to(self.usecka_na_ose_y.get_center(), LEFT + 0.2*UP)
+            .add_background_rectangle(**gs.BACKGROUND_RECTANGLE)
         )
 
 
-        self.sin_stupne = always_redraw(lambda:
-            MathTex(
-                f"\\sin({self.get_stupne()}^\\circ)",
-                **gs.SIN_TEXT,
-            ).next_to(self.usecka_na_ose_y.get_center(), LEFT + 0.2*UP)
-        )
+        cos_label = MathTex(r"\cos(", **gs.COS_TEXT).rotate(rotace)
+        cos_zavorka = MathTex(r")", **gs.COS_TEXT).rotate(rotace)
 
-        relative_down = rotate_vector(DOWN, rotace)
-        self.cos_stupne = always_redraw(lambda:
-            MathTex(
-                f"\\cos({self.get_stupne()}^\\circ)",
-                **gs.COS_TEXT,
-            ).rotate(rotace).next_to(self.usecka_na_ose_x.get_center(), relative_down)
+        # navic pro moznost otocit jedn. kruznici o 90 stupnu a ukazat promitnuti kosinu do grafu
+        relative_down = DOWN if rotace == 0 else RIGHT
+        relative_right = RIGHT if rotace == 0 else UP
+        
+        self.cos_stupne = always_redraw(lambda: VGroup(
+            cos_label, Integer(self.get_stupne(), unit=r"^{\circ}", **gs.COS_TEXT).rotate(rotace), cos_zavorka)
+            .arrange(relative_right, buff=0.1)
+            .next_to(self.usecka_na_ose_x.get_center(), relative_down)
+            .add_background_rectangle(**gs.BACKGROUND_RECTANGLE)
         )

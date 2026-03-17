@@ -38,7 +38,7 @@ class Radiany_na_stupne(Slide):
             self.wait(1)
             self.next_slide()
             vypocet = MathTex(r"\frac{" + radiany_tex[i] + "}{2 \pi} = " + zlomky[i]).move_to(k.misto_pro_pocitani)
-            zlomek = MathTex(zlomky[i], color=gs.VYSEC_BARVA).move_to(k.misto_pro_text_vysec())
+            zlomek = MathTex(zlomky[i], **gs.VYSEC_TEXT).move_to(k.misto_pro_text_vysec())
             self.play(Write(vypocet))
             self.play(Write(zlomek))
             self.wait(1)
