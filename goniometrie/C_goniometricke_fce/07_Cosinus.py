@@ -16,8 +16,8 @@ class Cosinus(Slide):
     def construct(self):
         
         g = Grafy("COS")
-        zachytne = [ PI/2, PI, PI*3/2, PI/6, PI/4, PI/3]
-        zachytne_fast = [0, 3*PI/4, 5*PI/4, 7*PI/4, 2*PI]
+        zachytne = [ 0.1*DEGREES, PI/2, PI, PI*3/2, 2*PI, PI/4]
+        zachytne_fast = [PI/6, PI/3, 3*PI/4, 5*PI/4, 7*PI/4]
 
         self.add(g.kruznice_grupa, g.k.cos_grupa, g.graf_grupa)
 
