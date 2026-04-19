@@ -124,21 +124,22 @@ class Jednotkova_kruznice():
             **gs.BOD_POHYB)
         )  # ten pohyblivy, souradnice se budou menit
         
-        self.znakA = MathTex("A").next_to(self.bodA, UR)
-        self.znakV = MathTex("V").next_to(self.bodV, DR * 0.5)
-        self.znakB = MathTex("B").add_updater(lambda m:m.move_to(self.misto_znak_u_kruznice(self.velikost_uhlu.get_value())))
+        self.znakA = MathTex("A", **gs.TEXT).next_to(self.bodA, UR)
+        self.znakV = MathTex("V", **gs.TEXT).next_to(self.bodV, DR * 0.5)
+        self.znakB = MathTex("B", **gs.TEXT).add_updater(lambda m:m.move_to(self.misto_znak_u_kruznice(self.velikost_uhlu.get_value())))
         
-        self.useckaVA = Line(self.bodV, self.bodA)
-        self.poloprVA = do_poloprimky(Line(self.bodV, self.bodA))
+        self.useckaVA = Line(self.bodV, self.bodA, **gs.HLAVNI_CARA)
+        self.poloprVA = do_poloprimky(Line(self.bodV, self.bodA, **gs.HLAVNI_CARA))
 
-        self.useckaVB = always_redraw(lambda: Line(self.bodV.get_center(), self.bodB))
-        self.poloprVB = always_redraw(lambda: do_poloprimky(Line(self.bodV.get_center(), self.bodB)))
+        self.useckaVB = always_redraw(lambda: Line(self.bodV.get_center(), self.bodB, **gs.HLAVNI_CARA))
+        self.poloprVB = always_redraw(lambda: do_poloprimky(Line(self.bodV.get_center(), self.bodB, **gs.HLAVNI_CARA)))
 
         self.uhel_symbol = always_redraw(lambda: Angle(self.poloprVA, self.poloprVB, **gs.UHEL_SYMBOL))
 
         self.text_stupne = always_redraw(lambda: Integer(
             self.get_stupne_norm(),
             unit=r"^{\circ}")
+            .set(**gs.TEXT)
             .move_to(self.misto_u_uhel_symbol())
             #.add_background_rectangle(**gs.BACKGROUND_RECTANGLE)
         )

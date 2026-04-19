@@ -35,7 +35,7 @@ class Stupne_na_zlomky(Slide):
             self.wait(1)
             self.next_slide()
             vypocet = MathTex(
-                r"\frac{" + str(s) + "^{\circ}}{360^{\circ}} = " + stupne_a_zlomky[s]
+                r"\frac{" + str(s) + "^{\circ}}{360^{\circ}} = " + stupne_a_zlomky[s], **gs.TEXT
                 ).move_to(k.misto_pro_pocitani).add_background_rectangle(**gs.BACKGROUND_RECTANGLE)
             self.play(Write(vypocet))
             self.play(Write(zlomek))
@@ -44,3 +44,5 @@ class Stupne_na_zlomky(Slide):
 
             self.play(FadeOut(k.vysec), Unwrite(zlomek), Unwrite(vypocet))
             self.wait(1)
+
+            

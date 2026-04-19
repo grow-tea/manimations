@@ -44,7 +44,7 @@ class Stupne_symetrie(Slide):
         poloprVA_obraz = do_poloprimky(Line(k.osy.c2p(0,0), k.misto_na_kruznici(self.operace(0)*DEGREES), **gs.OBRAZ))
         uhel_symbol_obraz = Angle(poloprVB_obraz, poloprVA_obraz, **gs.UHEL_SYMBOL_OBRAZ) if not self.A_to_B \
             else Angle(poloprVA_obraz, poloprVB_obraz, **gs.UHEL_SYMBOL_OBRAZ)
-        uhel_text_obraz = Integer(self.poc_uhel, unit=r"^{\circ}").move_to(k.misto_pod_uhlem(self.operace(self.poc_uhel/2)*DEGREES))
+        uhel_text_obraz = Integer(self.poc_uhel, unit=r"^{\circ}", **gs.TEXT).move_to(k.misto_pod_uhlem(self.operace(self.poc_uhel/2)*DEGREES))
 
         self.vyraz.move_to(k.misto_pro_pocitani)
 
@@ -61,6 +61,7 @@ class Stupne_symetrie(Slide):
         self.next_slide()
         
         self.play(k.velikost_uhlu.animate.set_value(self.operace(self.poc_uhel)*DEGREES), run_time=2, rate_func=smooth)
+        self.wait(1)
         self.next_slide()
         self.play(Unwrite(self.vyraz), FadeOut(obrazy), FadeOut(usecka))
         self.play(k.velikost_uhlu.animate.set_value(self.poc_uhel*DEGREES), run_time=2, rate_func=smooth)

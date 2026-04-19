@@ -21,7 +21,7 @@ class Stupne_or_uhel(Slide):
         k.misto_pro_pocitani += LEFT * 0.7
         or_uhel_popis = always_redraw(lambda: Integer(
             k.get_stupne(), unit=r"^{\circ}",
-            group_with_commas=False)
+            group_with_commas=False, **gs.TEXT)
             .move_to(k.misto_pro_pocitani))
         pocet_tristasedesatek = MathTex("")
 
