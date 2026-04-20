@@ -19,6 +19,7 @@ class Pravouhly_trojuhelnik(Slide):
             **gs.BOD_STATIC
         ))
 
+        
         uhly = [60,30,45]
         zapisy_sin = []
         zapisy_cos = []
@@ -37,8 +38,9 @@ class Pravouhly_trojuhelnik(Slide):
         muj_text_stupne = always_redraw(lambda: Integer(
             k.get_stupne_norm(), unit=r"^{\circ}")
             .move_to(k.osy.c2p(0,0) * 0.7 + k.misto_na_kruznici(k.velikost_uhlu.get_value()*1/2) * 0.3)
+            .set(**gs.UHEL_TEXT)
         ) 
-        jedna = always_redraw(lambda: Integer(1).next_to(k.useckaVB.get_center(), UL, buff=0.2))
+        jedna = always_redraw(lambda: Integer(1).next_to(k.useckaVB.get_center(), UL, buff=0.2).set(**gs.POLOMER_TEXT))
         
         self.add(k.kruznice, k.osy, k.useckaVA, k.useckaVB, k.bodA, k.bodB, k.bodV,
                  muj_text_stupne, muj_uhel_symbol, jedna)
@@ -55,7 +57,7 @@ class Pravouhly_trojuhelnik(Slide):
                 **gs.TROJUHELNIK
             )
             pravy_uhel = RightAngle(Line(bodC, k.bodV), Line(bodC, k.bodB))
-            trojuhelnik_grupa = VGroup(trojuhelnik, bodC) #pravy_uhel)
+            trojuhelnik_grupa = VGroup(trojuhelnik, bodC, pravy_uhel) #pravy_uhel)
             self.play(FadeIn(trojuhelnik_grupa))
             self.wait(1)
             self.next_slide()

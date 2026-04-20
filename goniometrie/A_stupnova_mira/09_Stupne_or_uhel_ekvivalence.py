@@ -15,7 +15,7 @@ class Stupne_or_uhel_ekvivalence(Slide):
 
         k = Jednotkova_kruznice(0.1*DEGREES)
         cil_stupen = 210
-        or_uhel_popis = always_redraw(lambda: Integer(k.get_stupne(), unit=r"^{\circ}", group_with_commas=False).move_to(k.misto_pro_pocitani))
+        or_uhel_popis = always_redraw(lambda: Integer(k.get_stupne(), unit=r"^{\circ}", group_with_commas=False).move_to(k.misto_pro_pocitani).set(**gs.TEXT))
 
         cil_pozice = k.misto_na_kruznici(cil_stupen*DEGREES)
         cil_bod = k.bod_na_kruznici(cil_stupen*DEGREES)
@@ -45,7 +45,7 @@ class Stupne_or_uhel_ekvivalence(Slide):
             self.add(grupa)
             self.play(k.velikost_uhlu.animate.set_value((s)*DEGREES), run_time=4, rate_func=smooth)
             self.play(FadeOut(grupa))
-            self.play(TransformFromCopy(or_uhel_popis, Integer(s, unit="^{\circ}").move_to(k.osy.c2p(0.3 + i * 0.5, -1.2))))
+            self.play(TransformFromCopy(or_uhel_popis, Integer(s, unit="^{\circ}").move_to(k.osy.c2p(0.3 + i * 0.5, -1.2)).set(**gs.TEXT)))
             self.next_slide()
 
             k.velikost_uhlu.set_value(0.1*DEGREES)

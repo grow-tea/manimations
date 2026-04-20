@@ -19,26 +19,4 @@ class Vodorovna_symetrie(Stupne_symetrie):
     koncovy_uhel = 180 - poc_uhel
     A_to_B = False
 
-    vyraz = MathTex("180^{\circ} - "+ str(poc_uhel) +"^{\circ} = " + str(koncovy_uhel) + "^{\circ}")
-
-
-class Svisla_symetrie(Stupne_symetrie):
-    def operace(self, stupen):
-        return 360 - stupen
-
-    poc_uhel = 33
-    koncovy_uhel = 360 - poc_uhel
-    A_to_B = False
-
-    vyraz = MathTex("360^{\circ} - "+ str(poc_uhel) +"^{\circ} = " + str(koncovy_uhel) + "^{\circ}")
-
-class Stredova_soumernost(Stupne_symetrie):
-    def operace(self, stupen):
-        return stupen + 180
-
-    A_to_B = True # jako obraz se zobrazi uhel AVB, ne BVA
-
-    poc_uhel = 33
-    koncovy_uhel = 180 + poc_uhel
-
-    vyraz = MathTex("180^{\circ} + "+ str(poc_uhel) +"^{\circ} = " + str(koncovy_uhel) + "^{\circ}")
+    vyraz = MathTex("180^{\circ} - "+ str(poc_uhel) +"^{\circ} = " + str(koncovy_uhel) + "^{\circ}", **gs.TEXT)

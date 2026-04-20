@@ -24,7 +24,7 @@ class Grafy():
             y_range = [-1.3, 1.3, 0.2],
             x_length = 7,
             y_length = 5,
-            axis_config = {"include_tip": False}
+            axis_config = {"include_tip": False, "color": gs.GRAF_OSY_BARVA},
         ).to_edge(RIGHT, buff=1)
         
         self.labels = self.osy_grafu.get_axis_labels(x_label="x", y_label="\\sin(x)" if mod=="SIN" else "\\cos(x)")
@@ -49,6 +49,7 @@ class Grafy():
         self.pomocna_usecka = always_redraw(lambda: DashedLine(
             start = self.k.bodB,
             end = self.bod_sinusoida if mod=="SIN" else self.bod_kosinusoida,
+            **gs.POMOCNA_CARA
         ))
 
         self.svislice = always_redraw(lambda: Line(

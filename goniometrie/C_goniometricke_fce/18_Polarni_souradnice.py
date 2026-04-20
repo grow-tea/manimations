@@ -59,9 +59,11 @@ class Polarni_souradnice(Slide):
             self.next_slide()
 
             self.play(k.velikost_uhlu.animate.set_value(uhly[i]), run_time=3, rate_func=smooth)
+            self.wait(1)
             self.next_slide()
 
             self.play(polomer_kruznice.animate.set_value(delka_jedna * polomery[i]))
+            self.wait(1)
             self.next_slide()
 
             kolmiceX = DashedLine(bod, Dot(k.osy.c2p(polomery[i] * np.cos(uhly[i]), 0)))
@@ -71,11 +73,14 @@ class Polarni_souradnice(Slide):
             self.next_slide()
 
             self.play(Create(usecka))
-            self.play(Write(polomer))
+            self.play(Write(polomer.add_background_rectangle(**gs.BACKGROUND_RECTANGLE)))
             self.wait(1)
             self.next_slide()
 
-            souradnice = MathTex(r"[" + pol_str[i] + " \cdot \cos(" + str(k.get_stupne()) + "^{\circ}), "+pol_str[i]+"\cdot \sin("+str(k.get_stupne())+"^{\circ})]")
+            souradnice = MathTex(
+                r"[" + pol_str[i] + " \cdot \cos(" + str(k.get_stupne()) + "^{\circ}), "
+                + pol_str[i] + "\cdot \sin("+str(k.get_stupne())+"^{\circ})]"
+                ).set(**gs.TEXT)
             self.play(Write(souradnice.move_to(k.misto_pro_pocitani).scale(0.9).add_background_rectangle(**gs.BACKGROUND_RECTANGLE)))
             self.wait(1)
             self.next_slide()

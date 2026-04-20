@@ -33,7 +33,7 @@ class Zlomky_na_radiany(Slide):
             self.play(Write(zlomek))
             self.wait(1)
             self.next_slide()
-            vypocet = MathTex(r"2 \pi \cdot " + zlomky[i] + "=" + radiany_tex[i]).move_to(k.misto_pro_pocitani)
+            vypocet = MathTex(r"2 \pi \cdot " + zlomky[i] + "=" + radiany_tex[i], **gs.TEXT).move_to(k.misto_pro_pocitani)
             self.play(Write(vypocet))
             self.wait(1)
             self.next_slide()

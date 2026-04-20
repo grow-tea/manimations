@@ -139,7 +139,7 @@ class Jednotkova_kruznice():
         self.text_stupne = always_redraw(lambda: Integer(
             self.get_stupne_norm(),
             unit=r"^{\circ}")
-            .set(**gs.TEXT)
+            .set(**gs.UHEL_TEXT)
             .move_to(self.misto_u_uhel_symbol())
             #.add_background_rectangle(**gs.BACKGROUND_RECTANGLE)
         )

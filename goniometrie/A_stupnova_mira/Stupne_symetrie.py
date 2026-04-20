@@ -33,7 +33,7 @@ class Stupne_symetrie(Slide):
 
         cilova_pozice = k.misto_na_kruznici((self.operace(self.poc_uhel)) * DEGREES)
         cilovy_bod = Dot(cilova_pozice, **gs.BOD_HADEJ)
-        usecka = DashedLine(k.bodB.get_center(), cilova_pozice)
+        usecka = DashedLine(k.bodB.get_center(), cilova_pozice, **gs.POMOCNA_CARA)
 
         self.next_slide()
         self.play(Create(usecka), Create(cilovy_bod))
@@ -44,7 +44,7 @@ class Stupne_symetrie(Slide):
         poloprVA_obraz = do_poloprimky(Line(k.osy.c2p(0,0), k.misto_na_kruznici(self.operace(0)*DEGREES), **gs.OBRAZ))
         uhel_symbol_obraz = Angle(poloprVB_obraz, poloprVA_obraz, **gs.UHEL_SYMBOL_OBRAZ) if not self.A_to_B \
             else Angle(poloprVA_obraz, poloprVB_obraz, **gs.UHEL_SYMBOL_OBRAZ)
-        uhel_text_obraz = Integer(self.poc_uhel, unit=r"^{\circ}", **gs.TEXT).move_to(k.misto_pod_uhlem(self.operace(self.poc_uhel/2)*DEGREES))
+        uhel_text_obraz = Integer(self.poc_uhel, unit=r"^{\circ}", **gs.OBRAZ_TEXT).move_to(k.misto_pod_uhlem(self.operace(self.poc_uhel/2)*DEGREES))
 
         self.vyraz.move_to(k.misto_pro_pocitani)
 

@@ -19,24 +19,25 @@ class GonioStyle:
     BOD_POHYB= {"color": RED, "z_index": 2}
     BOD_STATIC = {"color": RED_A if DM else RED_E, "z_index":1}
     POLOMER_TEXT = {"color": RED}
-    POLOMER_USECKA = {"color": RED, "stroke_width": 4}
+    POLOMER_USECKA = {"color": RED, "stroke_width": 8}
     
     # pro stupnovou miru
     UHEL_BARVA = YELLOW if DM else GOLD
+    UHEL_TEXT = {"color": WHITE if DM else BLACK, "z_index": 0}
     UHEL_SYMBOL = {"radius": 0.5, "color": UHEL_BARVA, "z_index": -1}
-    UHEL_LABEL = {"color": YELLOW, "z_index": 1}
-    UHEL_SVISLICE = {"color": YELLOW, "stroke_opacity": 0.5, "z_index": -2}
+    UHEL_LABEL = {"color": YELLOW if DM else GOLD, "z_index": 1}
+    UHEL_SVISLICE = {"color": YELLOW if DM else GOLD, "stroke_opacity": 0.5, "z_index": -2}
 
     # zlomky
     VYSEC_BARVA = YELLOW_E
     VYSEC = { "color": VYSEC_BARVA, "fill_opacity": 0.3, "z_index": -2 }
-    VYSEC_TEXT = {"color": YELLOW_A if DM else BLACK}
+    VYSEC_TEXT = {"color": YELLOW_A if DM else GOLD_E}
     
     # pro obrazy, cile, veci k hadani
     BOD_HADEJ = {"color": BLUE, "z_index": 1}
-    OBRAZ = {"color": BLUE_E if DM else BLUE_B, "z_index": -1}
-    OBRAZ_TEXT = {"color": BLUE, "z_index": -1}
-    UHEL_SYMBOL_OBRAZ = {"radius": 0.5, "color": BLUE_E if DM else BLUE_B, "z_index": -1}
+    OBRAZ = {"color": BLUE_E if DM else BLUE_B, "z_index": -2}
+    OBRAZ_TEXT = {"color": BLUE if DM else BLUE_D, "z_index": -2}
+    UHEL_SYMBOL_OBRAZ = {"radius": 0.5, "color": BLUE_E if DM else BLUE_B, "z_index": -2}
     
 
     # pro obloukovou miru
@@ -58,21 +59,21 @@ class GonioStyle:
     SIN_USECKA = {"color": TEAL_D if DM else TEAL_B, "stroke_width": 8, "z_index": 0}
     SINUSOIDA = {"stroke_color": TEAL_D if DM else TEAL_B, "stroke_width": 6}
     
-    COS_TEXT = {"color": PURPLE_A if DM else PURPLE_E, "font_size": 40, "z_index": 3}
-    COS_BOD = {"color": PURPLE_A if DM else PURPLE_E, "z_index": 1}
-    COS_USECKA = {"color": PURPLE_B if DM else PURPLE_D, "stroke_width": 8, "z_index": 0}
-    COSINUSOIDA = {"stroke_color": PURPLE_B if DM else PURPLE_D, "stroke_width": 6}
+    COS_TEXT = {"color": PURPLE_A if DM else PURPLE_D, "font_size": 40, "z_index": 3}
+    COS_BOD = {"color": PURPLE_A if DM else PURPLE_D, "z_index": 1}
+    COS_USECKA = {"color": PURPLE_B if DM else PURPLE, "stroke_width": 8, "z_index": 0}
+    COSINUSOIDA = {"stroke_color": PURPLE_B if DM else PURPLE, "stroke_width": 6}
 
     # trojuhelnik zavedeni sin cos
-    TROJUHELNIK = {"fill_color": WHITE if DM else BLACK, "stroke_color": WHITE if DM else BLACK, "fill_opacity": 0.3, "z_index": 0}
+    TROJUHELNIK = {"fill_color": WHITE if DM else GRAY, "stroke_color": WHITE if DM else GRAY, "fill_opacity": 0.3, "z_index": -2}
 
     # polarni souradnice
     POLARNI_BACKGROUND_LINE = {
-        "stroke_color": BLUE_D if DM else BLUE_B,
+        "stroke_color": BLUE_D if DM else BLUE_D,
         "stroke_width": 2,
         "stroke_opacity": 0.5
     }
-    POLARNI_KRUZNICE = {"color": BLUE_E if DM else BLUE_A, "stroke_width": 6}
+    POLARNI_KRUZNICE = {"color": BLUE_E if DM else BLUE, "stroke_width": 6}
 
     BACKGROUND_RECTANGLE = {
         "color": BLACK if DM else WHITE,
@@ -80,6 +81,7 @@ class GonioStyle:
         "buff": 0.2
     }
 
+    GRAF_OSY_BARVA = WHITE if DM else GRAY
 
     OSY_CONFIG = {
         "x_range": (-1.3, 1.3, 0.1),

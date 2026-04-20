@@ -2,7 +2,7 @@ DIRS := A_stupnova_mira B_obloukova_mira C_goniometricke_fce
 GLOBAL_DEPS := config.py jednotkova_kruznice.py
 SRCS := $(foreach dir,$(DIRS),$(wildcard $(dir)/[0-9][0-9]_*.py))
 HTML_TARGETS := $(foreach src,$(SRCS),$(dir $(src))slides_publish/$(notdir $(src:.py=.html)))
-MANIM_FLAGS := -ql
+MANIM_FLAGS := -qm
 
 all: $(HTML_TARGETS)
 
