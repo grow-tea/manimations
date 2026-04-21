@@ -80,7 +80,7 @@ class GonioStyle:
         "opacity": 0.75,
         "buff": 0.2
     }
-
+    
     GRAF_OSY_BARVA = WHITE if DM else GRAY
 
     OSY_CONFIG = {
