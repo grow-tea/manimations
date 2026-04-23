@@ -8,7 +8,7 @@ wheels/
 media/
 *_assets/
 slides/
-slides_publish/
+*slides_publish*/
 
 # Virtual environments
 .venv
