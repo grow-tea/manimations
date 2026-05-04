@@ -24,6 +24,7 @@ class Polarni_souradnice(Slide):
             size= i * k.osy.x_axis.get_unit_size(),
             azimuth_step = 12,
             radius_step = 0.5,
+            radius_config=gs.POMOCNA_CARA,
             background_line_style=gs.POLARNI_BACKGROUND_LINE
         ).move_to(k.osy.get_center())
         
@@ -66,8 +67,8 @@ class Polarni_souradnice(Slide):
             self.wait(1)
             self.next_slide()
 
-            kolmiceX = DashedLine(bod, Dot(k.osy.c2p(polomery[i] * np.cos(uhly[i]), 0)))
-            kolmiceY = DashedLine(bod, Dot(k.osy.c2p(0, polomery[i] * np.sin(uhly[i]))))
+            kolmiceX = DashedLine(bod, Dot(k.osy.c2p(polomery[i] * np.cos(uhly[i]), 0)), **gs.POMOCNA_CARA)
+            kolmiceY = DashedLine(bod, Dot(k.osy.c2p(0, polomery[i] * np.sin(uhly[i]))), **gs.POMOCNA_CARA)
             self.play(Write(kolmiceX), Write(kolmiceY), run_time=1)
             self.wait(1)
             self.next_slide()
