@@ -27,7 +27,7 @@ class Grafy():
             axis_config = {"include_tip": False, "color": gs.GRAF_OSY_BARVA},
         ).to_edge(RIGHT, buff=1)
         
-        self.labels = self.osy_grafu.get_axis_labels(x_label="x", y_label="\\sin(x)" if mod=="SIN" else "\\cos(x)")
+        self.labels = self.osy_grafu.get_axis_labels(x_label=MathTex("x", **gs.TEXT),y_label=MathTex("\\sin(x)", **gs.TEXT) if mod=="SIN" else MathTex("\\cos(x)", **gs.TEXT))
 
         hodnoty_na_ose_x = {
             PI/2: MathTex(r"\frac{\pi}{2}", **gs.UHEL_LABEL),
